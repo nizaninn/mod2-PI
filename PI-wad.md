@@ -32,7 +32,7 @@ A proposta é entregar uma solução leve, intuitiva e atrativa para eventos de 
 
 ### 2.1. Personas (Semana 01)
 
-![Persona](image.png)
+![Persona](image-1.png)
 
 
 ### 2.2. User Stories (Semana 01)
