@@ -19,7 +19,7 @@ O sistema permite que usuários se registrem com perfis distintos: criador ou pa
 
 
 
-## ▶ Como Executar o Projeto Localmente
+## Como Executar o Projeto Localmente
 
 
 ### 1. Clone o repositório
@@ -70,5 +70,4 @@ Abra seu navegador e acesse:
 http://localhost:3000
 ```
 
-```
 
