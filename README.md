@@ -16,3 +16,12 @@ O sistema permite que usuários se registrem com perfis distintos: criador ou pa
 - Sistema de pontos por participação
 - Visualização de inscritos por criadores
 - Painel de pontuação por participante
+
+## Como Executar o Projeto Localmente
+
+Siga os passos abaixo para rodar o projeto localmente na sua máquina:
+
+### 1. Clone o repositório
+```bash
+git clone https://github.com/seu-usuario/seu-repositorio.git
+cd seu-repositorio
