@@ -1,5 +1,4 @@
 # Web Application Document - Projeto Individual - Módulo 2 - Inteli
-
 ## Nome do Projeto
 
 Projeto Individual de Nicole Zanin Silva - Checkly.
