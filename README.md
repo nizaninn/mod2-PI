@@ -17,7 +17,12 @@ O sistema permite que usuários se registrem com perfis distintos: criador ou pa
 - Visualização de inscritos por criadores
 - Painel de pontuação por participante
 
-## Como Executar o Projeto Localmente
+Claro! Aqui está o trecho em **Markdown** que explica **como executar o projeto localmente**, pronto para colar no seu `README.md`:
+
+---
+
+````markdown
+## ▶ Como Executar o Projeto Localmente
 
 Siga os passos abaixo para rodar o projeto localmente na sua máquina:
 
@@ -25,3 +30,54 @@ Siga os passos abaixo para rodar o projeto localmente na sua máquina:
 ```bash
 git clone https://github.com/seu-usuario/seu-repositorio.git
 cd seu-repositorio
+````
+
+### 2. Instale as dependências
+
+```bash
+npm install
+```
+
+### 3. Configure as variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto com as seguintes configurações:
+
+```
+PORT=3000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=sua_senha
+DB_NAME=nome_do_banco
+```
+
+> Obs.: ajuste os valores conforme sua configuração local de banco de dados.
+
+### 4. Execute o servidor
+
+Para iniciar o projeto:
+
+```bash
+node server.js
+```
+
+Ou, se estiver usando `nodemon` para desenvolvimento:
+
+```bash
+npx nodemon server.js
+```
+
+### 5. Acesse no navegador
+
+Abra seu navegador e acesse:
+
+```
+http://localhost:3000
+```
+
+```
+
+---
+
+Se quiser, posso gerar o `README.md` completo com essa seção e as anteriores todas unificadas. Deseja isso?
+```
+
