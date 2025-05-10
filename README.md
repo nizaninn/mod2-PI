@@ -17,14 +17,10 @@ O sistema permite que usuários se registrem com perfis distintos: criador ou pa
 - Visualização de inscritos por criadores
 - Painel de pontuação por participante
 
-Claro! Aqui está o trecho em **Markdown** que explica **como executar o projeto localmente**, pronto para colar no seu `README.md`:
 
----
 
-````markdown
 ## ▶ Como Executar o Projeto Localmente
 
-Siga os passos abaixo para rodar o projeto localmente na sua máquina:
 
 ### 1. Clone o repositório
 ```bash
@@ -74,10 +70,5 @@ Abra seu navegador e acesse:
 http://localhost:3000
 ```
 
-```
-
----
-
-Se quiser, posso gerar o `README.md` completo com essa seção e as anteriores todas unificadas. Deseja isso?
 ```
 
