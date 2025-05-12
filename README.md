@@ -24,8 +24,8 @@ O sistema permite que usuários se registrem com perfis distintos: criador ou pa
 
 ### 1. Clone o repositório
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
-cd seu-repositorio
+git clone https://github.com/nizaninn/PI-mod2
+cd PI
 ````
 
 ### 2. Instale as dependências
@@ -46,7 +46,7 @@ DB_PASSWORD=sua_senha
 DB_NAME=nome_do_banco
 ```
 
-> Obs.: ajuste os valores conforme sua configuração local de banco de dados.
+
 
 ### 4. Execute o servidor
 
@@ -56,12 +56,7 @@ Para iniciar o projeto:
 node server.js
 ```
 
-Ou, se estiver usando `nodemon` para desenvolvimento:
-
-```bash
-npx nodemon server.js
-```
-
+ 
 ### 5. Acesse no navegador
 
 Abra seu navegador e acesse:
