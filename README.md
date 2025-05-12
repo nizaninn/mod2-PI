@@ -65,4 +65,130 @@ Abra seu navegador e acesse:
 http://localhost:3000
 ```
 
+Estrutura de Pastas do Projeto
+````bash
+
+
+PI/
+├── mvc-boilerplate/                    
+│   ├── controllers/
+|   ├── assets/       
+│   ├── models/              
+│   ├── routes/             
+│   ├── services/           
+│   ├── tests/        
+│   └── views/
+│   └── scripts/
+│   └── documentos/
+│   └── config/
+│   └── .env.example/
+│   └── .gitignore/
+│   └── .jest.config.js/
+│   └── readme.md/
+│   └── rest.http/
+│   └── server.js/              
+│
+├── mvc-boilerplate/                    
+│   ├── .bin
+|   ├── accepts      
+│   ├── ansi-styles            
+│   ├── async            
+│   ├── balanced-match          
+│   ├── body-parser       
+│   └── brace-expansion
+│   └── bytes
+│   └── call-bind-apply-help
+│   └── call-bound
+│   └── chalk
+│   └── color-convert
+│   └── color-name
+│   └── concat-map
+│   └── content-disposition
+│   └── content-type
+│   └── cookie
+│   └── cookie-signature
+│   └── debug
+│   └── depd
+│   └── dotenev
+│   └── dunder-proto
+│   └── ee-first
+│   └── ejs
+│   └── encodeurl
+│   └── es-define-property
+│   └── es-errors
+│   └── es-object-atoms
+│   └── escape-html
+│   └── estag
+│   └── express
+│   └── filelist
+│   └── finalhandler
+│   └── forwarded
+│   └── fresh
+│   └── function-bind
+│   └── get-intrinsic
+│   └── get-proto
+│   └── gopd
+│   └── has-flag
+│   └── has-symbols
+│   └── hasown
+│   └── http-errors
+│   └── iconv-lite
+│   └── inherits
+│   └── ipaddr.js
+│   └── is-promise
+│   └── jake
+│   └── math-intrinsics
+│   └── media-typer
+│   └── merge-descripions
+│   └── mime-db
+│   └── mime-types
+│   └── minimatch
+│   └── ms
+│   └── negociator
+│   └── object-inspect
+│   └── on-finished
+│   └── once
+│   └── parseurl
+│   └── path-to-regexp
+│   └── pg
+│   └── pg-cloudflare
+│   └── pg-connection-string
+│   └── pg-int8
+│   └── pg-pool
+│   └── pg-protocol
+│   └── pg-types
+│   └── pgpass
+│   └── postgress-aray
+│   └── postress-bytea
+│   └── prostgress-date
+│   └── postgress-interval
+│   └── proxy-addr
+│   └── qs
+│   └── range-parser
+│   └── raw-body
+│   └── router
+│   └── safe-buffer
+│   └── saffer-buffer
+│   └── send
+│   └── serv-static
+│   └── setprototypeof
+│   └── side-channel
+│   └── side-channel-list
+│   └── side-channel-map
+│   └── side-channel-weak
+│   └── split2
+│   └── statuses
+│   └── supports-color
+│   └── toidentifier
+│   └── type-is
+│   └── unpipe
+│   └── vary
+│   └── wrappy
+│   └── xtend
+|
+├── package-lock.json/
+├── package.json/
+│
+├──PI-wad.md                  
+└── 
 
