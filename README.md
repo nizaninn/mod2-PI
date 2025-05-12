@@ -88,7 +88,7 @@ PI/
 │   └── rest.http/
 │   └── server.js/              
 │
-├── mvc-boilerplate/                    
+├── node_modules/                    
 │   ├── .bin
 |   ├── accepts      
 │   ├── ansi-styles            
