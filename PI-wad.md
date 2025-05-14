@@ -29,7 +29,7 @@ A proposta é entregar uma solução leve, intuitiva e atrativa para eventos de 
 
 ### 2.1. Personas (Semana 01)
 
-![Persona](image-1.png)
+![Persona](PI/assets/imagem-1.png)
 
 
 ### 2.2. User Stories (Semana 01)
@@ -58,9 +58,9 @@ US03 | Como participante de congressos coorporativos, quero encontrar e organiza
 
 ### 3.1. Modelagem do banco de dados  (Semana 3)
 
-![model](modelagem.png)
-![fisico](print1.png)
-![fisico2](print2.png)
+![model](PI/assets/modelagem.png)
+![fisico](PI/assets/print1.png)
+![fisico2](PI/assets/print2.png)
 
 ### 3.1.1 BD e Models (Semana 5)
 *Descreva aqui os Models implementados no sistema web*
@@ -78,8 +78,16 @@ US03 | Como participante de congressos coorporativos, quero encontrar e organiza
 
 ### 3.3. Wireframes (Semana 03)
 
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização).*
+![model](PI/assets/wireframe1.jpg)
+![fisico](PI/assets/wireframe2.jpg)
 
+Estes são os primeiros wireframes de baixa fidelidade do projeto, concebidos com foco na experiência do usuário e alinhados à seguinte user story:
+
+"Como participante de congressos corporativos, quero encontrar e organizar meus eventos em um só lugar, para que eu não precise perder tempo acessando diversas plataformas de diferentes empresas para realizar minha inscrição."
+
+A proposta dos wireframes é traduzir essa necessidade real em uma solução digital clara e funcional. Eles priorizam navegação intuitiva, centralização de eventos e facilidade na jornada de inscrição, que são lementos essenciais para melhorar a produtividade do usuário e reduzir fricções no processo de organização de congressos.
+
+Nesse contexto, o acesso direto ao gráfico de engajamento se torna uma funcionalidade essencial. Ele fornece métricas valiosas como taxa de visualização da página do evento, número de inscrições, tempo médio de navegação e conversão por canal de divulgação. Assim, a plataforma não só resolve o problema da fragmentação, como também oferece insights estratégicos que possibilitam o criador a melhorar continuamente suas ações.
 ### 3.4. Guia de estilos (Semana 05)
 
 *Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução.*
