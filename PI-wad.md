@@ -78,8 +78,8 @@ US03 | Como participante de congressos coorporativos, quero encontrar e organiza
 
 ### 3.3. Wireframes (Semana 03)
 
-![model](PI/assets/wireframe1.jpg)
-![fisico](PI/assets/wireframe2.jpg)
+![folha1](PI/assets/wireframe1.jpg)
+![folha2](PI/assets/wireframe2.jpg)
 
 Estes são os primeiros wireframes de baixa fidelidade do projeto, concebidos com foco na experiência do usuário e alinhados à seguinte user story:
 
