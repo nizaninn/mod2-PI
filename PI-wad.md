@@ -29,7 +29,7 @@ A proposta é entregar uma solução leve, intuitiva e atrativa para eventos de 
 
 ### 2.1. Personas (Semana 01)
 
-![Persona](PI/assets/imagem-1.png)
+![Persona](mvc-boilerplate/assets/imagem-1.png)
 
 
 ### 2.2. User Stories (Semana 01)
@@ -58,9 +58,9 @@ US03 | Como participante de congressos coorporativos, quero encontrar e organiza
 
 ### 3.1. Modelagem do banco de dados  (Semana 3)
 
-![model](PI/assets/modelagem.png)
-![fisico](PI/assets/print1.png)
-![fisico2](PI/assets/print2.png)
+![model](mvc-boilerplate/assets/modelagem.png)
+![fisico](mvc-boilerplate/assets/print1.png)
+![fisico2](mvc-boilerplate/assets/print2.png)
 
 ### 3.1.1 BD e Models (Semana 5)
 
@@ -176,19 +176,35 @@ Esta seção descreve os Models implementados na plataforma web, com foco em sua
 
 ### 3.2. Arquitetura (Semana 5)
 
-*Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário.*
+O padrão de arquitetura adotado para minha aplicação foi o MVC, ou Model-View-Controller, que é uma arquitetura de software amplamente adotada na engenharia de software para o desenvolvimento de sistemas robustos e escaláveis. Esse padrão organiza a estrutura de uma aplicação em três componentes principais: o Modelo (Model), a Visão (View) e o Controlador (Controller).
 
-**Instruções para criação do diagrama de arquitetura**  
-- **Model**: A camada que lida com a lógica de negócios e interage com o banco de dados.
-- **View**: A camada responsável pela interface de usuário.
-- **Controller**: A camada que recebe as requisições, processa as ações e atualiza o modelo e a visualização.
-  
-*Adicione as setas e explicações sobre como os dados fluem entre o Model, Controller e View.*
+ Modelo (Model): Modelo representa os dados e a lógica de negócios da aplicação. Ele inclui o estado e o comportamento dos objetos subjacentes, incluindo acesso a dados, validações e operações relacionadas. O Modelo é responsável por gerenciar a manipulação dos dados e notificar os Controladores sobre quaisquer mudanças relevantes.
+
+ Visão (View): A Visão é responsável pela apresentação dos dados ao usuário final. Ela exibe a interface gráfica ou textual com a qual o usuário interage, representando visualmente as informações do Modelo de maneira compreensível. A Visão é passiva e não possui lógica de negócios; ela apenas reflete o estado atual do Modelo.
+
+ Controlador (Controller): O Controlador atua como intermediário entre a Visão e o Modelo, gerenciando as interações do usuário e as operações de manipulação de dados. Ele recebe as entradas do usuário na Visão, interpreta essas entradas e aciona as ações apropriadas no Modelo. O Controlador também é responsável por atualizar a Visão conforme necessário, refletindo as mudanças nos dados do Modelo.
+
+ Vale ressaltar que o MVC é amplamente utilizado por várias razões, dentre elas, incluem-se as seguintes:
+
+ Separação de preocupações: O MVC promove uma clara separação de preocupações entre os diferentes componentes da aplicação, facilitando a manutenção, a extensibilidade e a reutilização de código.
+
+ Flexibilidade e escalabilidade: A arquitetura modular do MVC permite que os desenvolvedores trabalhem de forma independente em diferentes partes da aplicação, facilitando a colaboração em equipe e a evolução do software ao longo do tempo.
+
+ Facilidade de teste: A separação entre a lógica de negócios, a apresentação e o controle de fluxo torna mais fácil escrever testes automatizados para cada componente individualmente, garantindo a robustez e a qualidade do software.
+
+ Adoção generalizada: O MVC é um padrão bem estabelecido e amplamente adotado pela comunidade de desenvolvimento de software, o que significa que há uma abundância de recursos, ferramentas e frameworks disponíveis para facilitar sua implementação em uma variedade de tecnologias e plataformas.
+
+ Pode-se, portanto, afirmar que o padrão de design de software MVC é uma abordagem eficaz para o desenvolvimento de software modular, flexível e escalável, que promove a separação de preocupações e facilita a manutenção e evolução de aplicações complexas ao longo do tempo.
+
+ Agora vamos à nossa minha propriamente dita. O Checlky é uma aplicação web feita com base na arquitetura MVC (Model-View-Controller), cujo esboço foi desenhado através da plataforma Draw.io. 
+
+
+![diagrama](mvc-boilerplate/assets/ArquiteturaPI.drawio.png)
 
 ### 3.3. Wireframes (Semana 03)
 
-![folha1](PI/assets/wireframe1.jpg)
-![folha2](PI/assets/wireframe2.jpg)
+![folha1](mvc-boilerplate/assets/wireframe1.jpg)
+![folha2](mvc-boilerplate/assets/wireframe2.jpg)
 
 Estes são os primeiros wireframes de baixa fidelidade do projeto, concebidos com foco na experiência do usuário e alinhados à seguinte user story:
 
@@ -208,7 +224,12 @@ Nesse contexto, o acesso direto ao gráfico de engajamento se torna uma funciona
 
 ### 3.6. WebAPI e endpoints (Semana 05)
 
-*Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.*  
+Documentar os endpoints de uma API é essencial para garantir a clareza, organização e manutenibilidade do sistema. Uma boa documentação permite que desenvolvedores compreendam rapidamente como interagir com os recursos disponíveis, quais métodos HTTP utilizar, quais parâmetros são esperados e quais respostas podem ser retornadas
+
+Esta documentação descreve os endpoints disponíveis no sistema, de acordo com cada tabela.
+
+Para a documentação completa dos endpoints, acesse: [documentação de endpoints](/endpoints.md)
+
 
 ### 3.7 Interface e Navegação (Semana 07)
 
