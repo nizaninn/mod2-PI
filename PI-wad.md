@@ -63,7 +63,116 @@ US03 | Como participante de congressos coorporativos, quero encontrar e organiza
 ![fisico2](PI/assets/print2.png)
 
 ### 3.1.1 BD e Models (Semana 5)
-*Descreva aqui os Models implementados no sistema web*
+
+Esta seção descreve os Models implementados na plataforma web, com foco em suas entidades, atributos, relacionamentos e função dentro da plataforma.
+
+
+
+##  Model: Usuario
+
+**Descrição:** Representa os usuários cadastrados no sistema. Eles podem ser criadores de eventos ou participantes.
+
+**Campos:**
+- `id_unico` (SERIAL, PK): Identificador único do usuário.
+- `nome` (VARCHAR(100)): Nome completo do usuário. **Essa sessão é obrigatória**.
+- `email` (VARCHAR(100)): Endereço de e-mail único. **Essa sessão é obrigatória e única**.
+- `senha` (VARCHAR(100)): Senha do usuário (armazenada no banco de dados). **Essa sessão é obrigatória**.
+- `role` (VARCHAR(20)): Define o papel do usuário, se sua conta será para exercer a função de `'criador'` de eventos ou `'participante'`, que irá apenas realizar as inscrições. **Essa sessão é obrigatória**.
+
+**Relacionamentos:**
+- Pode ser criador de vários `Eventos`.
+- Pode participar de vários `Eventos` por meio de `Inscricoes`.
+- Pode ter um `Check_in` por cada evento que o usuário participou.
+- Pode ter um único registro de `Pontos`, que vão sendo acumulados na plataforma.
+
+
+
+##  Model: Categorias
+
+**Descrição:** Representa as categorias dos eventos, que serão separados em: coorporativos, shows e festas, teatro, standup, gospel, dança, festivais culturais, meetups, bem-estar e acadêmico.
+
+**Campos:**
+- `id_unico` (SERIAL, PK): Identificador único da categoria.
+- `nome` (VARCHAR(100)): Nome da categoria. **Esse campo é obrigatório**.
+- `descricao` (TEXT): Descrição opcional da categoria.
+
+**Relacionamentos:**
+- Uma `Categoria` pode estar associada a vários `Eventos`.
+
+
+
+##  Model: Eventos
+
+**Descrição:** Representa os eventos criados pelos usuários que se cadastram como criadores.
+
+**Campos:**
+- `id_unico` (SERIAL, PK): Identificador único do evento.
+- `nome` (VARCHAR(100)): Nome do evento. **Esse campo é obrigatório**.
+- `descricao` (TEXT): Descrição detalhada do evento.
+- `data` (DATE): Data de realização do evento. **Esse campo é obrigatório**.
+- `local` (VARCHAR(150)): Local do evento.
+- `valor` (DECIMAL): Valor da inscrição (se aplicável).
+- `criador_id` (INT): Referência ao `Usuario` criador. **Esse campo é obrigatório**.
+- `categoria_id` (INT): Referência à `Categoria` do evento. **Esse campo é obrigatório**.
+
+**Relacionamentos:**
+- Pertence a um `Usuario` (quando for criador).
+- Pertence a uma `Categoria`.
+- Pode ter várias `Inscricoes`.
+- Pode ter vários `Check_in`.
+
+
+
+## Model: Inscricoes
+
+**Descrição:** Representa as inscrições dos participantes nos eventos.
+
+**Campos:**
+- `id_unico` (SERIAL, PK): Identificador único da inscrição.
+- `data_de_inscricao` (TIMESTAMP): Data/hora da inscrição. 
+- `status` (VARCHAR(20)): Estado da inscrição: `'pendente'`, `'confirmado'` ou `'cancelado'`. **Esse campo é obrigatório**.
+- `id_participante` (INT): Referência ao participante (`Usuario`). **Esse campo é obrigatório**.
+- `id_evento` (INT): Referência ao `Evento`. **Esse campo é obrigatório**.
+- `token_de_confirmacao` (VARCHAR(255)): Token gerado para confirmação.
+
+**Relacionamentos:**
+- Pertence a um `Usuario`.
+- Pertence a um `Evento`.
+
+
+## Model: Check_in
+
+**Descrição:** Representa o check-in presencial do participante no evento.
+
+**Campos:**
+- `id_unico` (SERIAL, PK): Identificador único do check-in.
+- `data` (DATE): Data do check-in. **Esse campo é obrigatório**.
+- `hora` (TIME): Hora do check-in. **Esse campo é obrigatório**.
+- `local` (VARCHAR(150)): Local de realização do check-in.
+- `id_participante` (INT): Referência ao `Usuario`. **Esse campo é obrigatório**.
+- `id_evento` (INT): Referência ao `Evento`. **Esse campo é obrigatório**.
+- `qr_token` (VARCHAR(255)): Token gerado para QR Code do check-in.
+
+**Relacionamentos:**
+- Pertence a um `Usuario`.
+- Pertence a um `Evento`.
+
+
+
+## Model: Pontos
+
+**Descrição:** Representa o total de pontos acumulados por um participante, utilizado para gamificação ou recompensas.
+
+**Campos:**
+- `id_unico` (SERIAL, PK): Identificador único.
+- `total_pontos` (INT): Total de pontos acumulados. 
+- `ultima_atualizacao` (TIMESTAMP): Data/hora da última modificação.
+- `id_participante` (INT): Referência única ao `Usuario`. **Esse campo é obrigatório e único**.
+
+**Relacionamentos:**
+- Cada `Usuario` (participante) pode ter um único registro de `Pontos`.
+
+
 
 ### 3.2. Arquitetura (Semana 5)
 
