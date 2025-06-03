@@ -1,0 +1,24 @@
+{
+  "name": "pi-mod2",
+  "version": "1.0.0",
+  "description": "A Plataforma de Eventos com Check-in e Pontuação é um sistema web desenvolvido para facilitar o gerenciamento, inscrição e participação em eventos presenciais e online. O sistema foi pensado para atender tanto criadores de eventos, que desejam organizar e acompanhar suas atividades, quanto participantes, que buscam descobrir e se inscrever em eventos de interesse.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nizaninn/PI-mod2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nizaninn/PI-mod2/issues"
+  },
+  "homepage": "https://github.com/nizaninn/PI-mod2#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  }
+}
