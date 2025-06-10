@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastre-se</title>
+  <link rel="stylesheet" href="/css/cadastro.css">
+</head>
+<body>
+  <div class="container">
+    <div class="login-box">
+
+      <img src="/assets/logo.png" alt="Logo do Projeto" class="logo-projeto">
+
+      <h2>Cadastro</h2>
+      <form id="cadastro-form">
+        <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+
+        <input type="email" id="email" name="email" placeholder="E-mail" required>
+
+        <input type="password" id="senha" name="senha" placeholder="Senha" required>
+
+        <input type="password" id="confirmar" name="confirmar" placeholder="Confirmar senha" required>
+
+        <select id="role" name="role" required>
+          <option value="">Selecione seu tipo</option>
+          <option value="participante">Participante</option>
+          <option value="criador">Criador de Eventos</option>
+        </select>
+
+        <button type="submit">Cadastrar</button>
+      </form>
+
+      <!-- Link para login -->
+      <a href="/login" class="extra-button">Já tenho uma conta</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('cadastro-form').addEventListener('submit', async function(event) {
+      event.preventDefault(); // Evita o envio do formulário
+
+      const nome = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+      const confirmar = document.getElementById('confirmar').value;
+      const role = document.getElementById('role').value;
+
+      // Validações
+      if (!nome || !email || !senha || !confirmar || !role) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
+
+      if (senha !== confirmar) {
+        alert("As senhas não coincidem.");
+        return;
+      }
+
+      if (senha.length < 6) {
+        alert("A senha deve ter pelo menos 6 caracteres.");
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/usuarios', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ nome, email, senha, role })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          alert('Cadastro realizado com sucesso!');
+
+          // Fazer login automático após cadastro
+          try {
+            const loginResponse = await fetch('/api/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ email, senha })
+            });
+
+            const loginData = await loginResponse.json();
+
+            if (loginResponse.ok && loginData.success) {
+              // Login automático bem-sucedido, redirecionar para o painel
+              window.location.href = "/painel";
+            } else {
+              // Se login automático falhar, redirecionar para login manual
+              window.location.href = "/login";
+            }
+          } catch (loginError) {
+            console.error('Erro no login automático:', loginError);
+            window.location.href = "/login";
+          }
+        } else {
+          alert(data.error || 'Erro ao fazer cadastro');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro de conexão. Tente novamente.');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Check-in do Evento</title>
+  <link rel="stylesheet" href="/css/checkin.css" />
+</head>
+<body>
+  <header class="top-nav">
+    <img src="/assets/logo.png" alt="Checkly" class="logo" />
+    <nav>
+      <a href="/painel">Início</a>
+      <a href="/painel">Explorar</a>
+      <a href="/criarevento">Criar</a>
+      <a href="/perfil">Meu Perfil</a>
+    </nav>
+  </header>
+
+  <main class="checkin">
+    <h1>Check-in no Evento</h1>
+
+    <section class="evento-info" id="evento-info">
+      <h2 id="evento-nome">Carregando evento...</h2>
+      <p><strong>Data:</strong> <span id="evento-data">--</span></p>
+      <p><strong>Hora:</strong> <span id="evento-hora">--</span></p>
+      <p><strong>Local:</strong> <span id="evento-local">--</span></p>
+    </section>
+
+    <section class="confirmar" id="confirmar-section">
+      <p>Ao realizar o check-in, sua presença será confirmada neste evento e você ganhará 10 pontos!</p>
+      <button class="btn btn-success btn-lg btn-pulse" id="botao-checkin">Fazer Check-in</button>
+    </section>
+
+    <section class="status" id="statusCheckin" style="display: none;">
+      <p id="status-message">Check-in realizado com sucesso!</p>
+      <p id="pontos-message"></p>
+    </section>
+  </main>
+
+  <script>
+    let eventoId = null;
+
+    // Carregar dados do evento ao carregar a página
+    document.addEventListener('DOMContentLoaded', async function() {
+      // Pegar ID do evento da URL (ex: /checkin?evento=1)
+      const urlParams = new URLSearchParams(window.location.search);
+      eventoId = urlParams.get('evento');
+
+      if (!eventoId) {
+        alert('ID do evento não fornecido');
+        window.location.href = '/painel';
+        return;
+      }
+
+      try {
+        // Carregar dados do evento
+        const response = await fetch(`/api/eventos/${eventoId}`);
+        if (response.ok) {
+          const evento = await response.json();
+          document.getElementById('evento-nome').textContent = evento.nome;
+          document.getElementById('evento-data').textContent = new Date(evento.data).toLocaleDateString('pt-BR');
+          document.getElementById('evento-local').textContent = evento.local;
+
+          // Adicionar informações extras se disponíveis
+          if (evento.descricao) {
+            const infoSection = document.getElementById('evento-info');
+            const descElement = document.createElement('p');
+            descElement.innerHTML = `<strong>Descrição:</strong> ${evento.descricao}`;
+            infoSection.appendChild(descElement);
+          }
+        } else {
+          throw new Error('Evento não encontrado');
+        }
+      } catch (error) {
+        console.error('Erro ao carregar evento:', error);
+        alert('Erro ao carregar dados do evento');
+        window.location.href = '/painel';
+      }
+    });
+
+    // Check-in
+    document.getElementById('botao-checkin').addEventListener('click', async function() {
+      if (!eventoId) {
+        alert('ID do evento não encontrado');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/checkin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id_evento: eventoId })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Check-in bem-sucedido
+          document.getElementById('confirmar-section').style.display = 'none';
+          document.getElementById('statusCheckin').style.display = 'block';
+          document.getElementById('status-message').textContent = 'Check-in realizado com sucesso!';
+          document.getElementById('pontos-message').textContent = `Você ganhou ${data.pontosGanhos} pontos!`;
+        } else {
+          alert(data.error || 'Erro ao fazer check-in');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro de conexão. Tente novamente.');
+      }
+    });
+  </script>
+</body>
+</html>

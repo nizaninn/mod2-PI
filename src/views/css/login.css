@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+/* Estilo para o corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #661919;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+  
+/* Estilo para o cabeçalho */
+header {
+    background-color: #333;
+    color: #ffffff;
+    padding: 10px 0;
+    text-align: center;
+}
+  
+/* Estilo para a navegação dentro do cabeçalho */
+header nav ul {
+    list-style-type: none;
+}
+  
+header nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+  
+header nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+  
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+  
+/* Estilo para o conteúdo principal */
+main {
+    padding: 20px;
+}
+  
+/* Estilo para o rodapé */
+footer {
+    background-color: #333333;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+  
+/* Centraliza a tela de login */
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo da caixa de login */
+.login-box {
+    background-color: #950101;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Estilo do título */
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+/* Estilo dos inputs e labels */
+.login-box label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 8px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #4a0000;
+}
+
+/* Estilo do botão */
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-box button:hover {
+    background-color: #0056b3;
+}
+
+.logo-projeto {
+  display: block;
+  margin-left: 63px;
+  margin-bottom: 20px;
+  width: 100%;           
+  max-width: 200px;      
+  height: auto;
+}
+/* Estilo para os botões de navegação (recuperar/cadastro) */
+.extra-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 12px;
+  padding: 10px;
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 15px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.extra-button:hover {
+  background-color: #ffffff;
+  color: #950101;
+}

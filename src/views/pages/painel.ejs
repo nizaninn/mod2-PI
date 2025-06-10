@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkly - Dashboard</title>
+  <link rel="stylesheet" href="/css/painel.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- NOVA BARRA SUPERIOR -->
+    <header class="menu-topo">
+      <div class="menu-esquerda">
+        <img src="/assets/logo.png" alt="Logo Checkly" class="logo">
+        <span id="user-name">Olá, <%= user.name %></span>
+      </div>
+      <nav class="menu-links">
+        <a href="/perfil" class="perfil">Perfil</a>
+        <a href="#" id="logout-btn" class="perfil">Sair</a>
+      </nav>
+    </header>
+
+    <main class="content">
+      <!-- BARRA DE AÇÕES DO USUÁRIO -->
+      <section class="pesquisa-evento">
+        <input type="text" placeholder="Pesquisar eventos..." class="campo-pesquisa" id="search-input">
+        <button class="btn btn-primary" id="search-btn">Buscar</button>
+        <button class="btn btn-secondary" id="clear-search">Limpar</button>
+      </section>
+
+      <header class="top-bar">
+        <div></div>
+        <nav>
+          <a href="/meuevento">Meus Eventos</a>
+          <% if (user.role === 'criador') { %>
+            <a href="/criarevento" class="criar-evento">+ Criar Evento</a>
+          <% } %>
+          <span id="user-points">Pontos: 0</span>
+        </nav>
+      </header>
+
+      <!-- CATEGORIAS -->
+      <section class="categorias">
+        <div class="section-header">
+          <h2>Categorias</h2>
+        </div>
+        <div class="card-scroll">
+          <a href="/categoria?id=1" class="card"><img src="/assets/microfone.png" alt="Show Icon"><span>Show</span></a>
+          <a href="/categoria?id=3" class="card"><img src="/assets/bola-de-futebol.png" alt="Esporte Icon"><span>Esporte</span></a>
+          <a href="/categoria?id=2" class="card"><img src="/assets/pasta.png" alt="Corporativo Icon"><span>Corporativo</span></a>
+          <a href="/categoria?id=4" class="card"><img src="/assets/assimilacao-cultural.png" alt="Cultural Icon"><span>Cultural</span></a>
+          <a href="/categoria?id=5" class="card"><img src="/assets/saude.png" alt="Saúde Icon"><span>Saúde e Lifestyle</span></a>
+        </div>
+      </section>
+
+     
+      <section class="mais-vendidos">
+        <div class="section-header">
+          <h2>Eventos Disponíveis</h2>
+        </div>
+        <div class="card-scroll" id="eventos-em-alta">
+          <!-- Eventos serão carregados dinamicamente -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    const userId =  user.id;
+    
+    // Carregar dados do usuário ao carregar a página
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        // Carregar pontos do usuário
+        const pointsResponse = await fetch(`/api/pontos/${userId}`);
+        if (pointsResponse.ok) {
+          const pointsData = await pointsResponse.json();
+          document.getElementById('user-points').textContent = `Pontos: ${pointsData.total_pontos || 0}`;
+        }
+
+        // Carregar eventos
+        loadEvents();
+
+        // Configurar busca
+        setupSearch();
+
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+      }
+    });
+
+    // Função para carregar eventos
+    async function loadEvents() {
+      try {
+        console.log('Carregando eventos...');
+        const response = await fetch('/api/eventos');
+        console.log('Resposta da API eventos:', response.status);
+
+        if (response.ok) {
+          const eventos = await response.json();
+          console.log('Eventos carregados:', eventos);
+
+          if (eventos.length === 0) {
+            // Se não há eventos, mostrar mensagem
+            document.getElementById('eventos-em-alta').innerHTML = '<p>Nenhum evento encontrado</p>';
+            return;
+          }
+
+          // Renderizar todos os eventos na seção principal
+          renderEventos('eventos-em-alta', eventos);
+        } else {
+          console.error('Erro ao carregar eventos:', response.status);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar eventos:', error);
+      }
+    }
+
+    // Função para renderizar eventos
+    function renderEventos(containerId, eventos) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      if (eventos.length === 0) {
+        container.innerHTML = '<p>Nenhum evento disponível</p>';
+        return;
+      }
+
+      eventos.forEach(evento => {
+        const eventoElement = document.createElement('a');
+        eventoElement.href = `/inscrever?evento=${evento.id_unico}`;
+        eventoElement.className = 'evento';
+
+        // Formatar data de forma segura
+        let dataFormatada = 'Data não informada';
+        try {
+          if (evento.data) {
+            dataFormatada = new Date(evento.data).toLocaleDateString('pt-BR');
+          }
+        } catch (e) {
+          console.error('Erro ao formatar data:', e);
+        }
+
+        // Formatar valor de forma segura
+        const valor = parseFloat(evento.valor) || 0;
+        const valorFormatado = valor.toFixed(2).replace('.', ',');
+
+        eventoElement.innerHTML = `
+          <div class="imagem-evento">
+            <img src="/assets/evento-default.jpg" alt="Imagem ${evento.nome || 'Evento'}" onerror="this.src='/assets/logo.png'">
+          </div>
+          <div class="info">
+            <h3>${evento.nome || 'Evento sem nome'}</h3>
+            <p>${dataFormatada} – ${evento.local || 'Local não informado'}</p>
+            <p><strong>R$ ${valorFormatado}</strong></p>
+          </div>
+        `;
+        container.appendChild(eventoElement);
+      });
+    }
+
+    // Configurar sistema de busca
+    function setupSearch() {
+      const searchInput = document.getElementById('search-input');
+      const searchBtn = document.getElementById('search-btn');
+      const clearBtn = document.getElementById('clear-search');
+
+      searchBtn.addEventListener('click', performSearch);
+      clearBtn.addEventListener('click', clearSearch);
+      searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          performSearch();
+        }
+      });
+    }
+
+    async function performSearch() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+
+      if (!searchTerm) {
+        alert('Digite algo para buscar');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/eventos');
+        if (response.ok) {
+          const eventos = await response.json();
+          const filteredEvents = eventos.filter(evento =>
+            evento.nome.toLowerCase().includes(searchTerm) ||
+            evento.local.toLowerCase().includes(searchTerm) ||
+            (evento.descricao && evento.descricao.toLowerCase().includes(searchTerm))
+          );
+
+          // Mostrar resultados da busca
+          const container = document.getElementById('eventos-em-alta');
+          container.innerHTML = '<h3 style="color: white; margin-bottom: 20px;">Resultados da Busca (' + filteredEvents.length + ' encontrados)</h3>';
+
+          if (filteredEvents.length === 0) {
+            container.innerHTML += '<p style="color: #ccc;">Nenhum evento encontrado para "' + searchTerm + '"</p>';
+          } else {
+            renderEventos('eventos-em-alta', filteredEvents);
+          }
+        }
+      } catch (error) {
+        console.error('Erro na busca:', error);
+        alert('Erro ao realizar busca');
+      }
+    }
+
+    function clearSearch() {
+      document.getElementById('search-input').value = '';
+      loadEvents(); // Recarregar todos os eventos
+    }
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', async function(e) {
+      e.preventDefault();
+      try {
+        const response = await fetch('/logout', { method: 'POST' });
+        if (response.ok) {
+          window.location.href = '/login';
+        }
+      } catch (error) {
+        console.error('Erro ao fazer logout:', error);
+        window.location.href = '/login';
+      }
+    });
+  </script>
+</body>
+</html>

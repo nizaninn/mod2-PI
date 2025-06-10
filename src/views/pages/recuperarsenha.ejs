@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar Senha - Checkly</title>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+  <div class="container">
+    <div class="login-box">
+
+      <img src="/assets/logo.png" alt="Logo do Projeto" class="logo-projeto">
+
+      <h2>Recuperar Senha</h2>
+      <form id="recuperar-form">
+        <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+
+        <button type="submit">Enviar Link de Recuperação</button>
+      </form>
+
+      <!-- Botão para voltar ao login -->
+      <a href="/login" class="extra-button">Voltar ao Login</a>
+
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('recuperar-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const email = document.getElementById('email').value;
+
+      if (!email) {
+        alert("Por favor, digite seu e-mail.");
+        return;
+      }
+
+      try {
+        // Verificar se o email existe no sistema
+        const response = await fetch('/api/usuarios');
+        if (response.ok) {
+          const usuarios = await response.json();
+          const usuarioEncontrado = usuarios.find(user => user.email === email);
+
+          if (usuarioEncontrado) {
+            // Simular envio de email (em produção, enviaria email real)
+            alert(`Link de recuperação enviado para ${email}!\n\nPara fins de demonstração, sua nova senha temporária é: temp123\n\nEm um sistema real, você receberia um email com instruções.`);
+
+            // Em um sistema real, aqui você geraria um token e enviaria por email
+            // Por enquanto, vamos apenas mostrar uma mensagem de sucesso
+            setTimeout(() => {
+              window.location.href = '/login';
+            }, 3000);
+          } else {
+            alert('Email não encontrado no sistema. Verifique se digitou corretamente ou cadastre-se primeiro.');
+          }
+        } else {
+          throw new Error('Erro ao verificar email');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao processar solicitação. Tente novamente mais tarde.');
+      }
+    });
+  </script>
+</body>
+</html>

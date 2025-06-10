@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meus Eventos - Checkly</title>
+  <link rel="stylesheet" href="/css/meuevento.css">
+</head>
+<body>
+  <header class="top-nav">
+    <img src="/assets/logo.png" alt="Checkly" class="logo" />
+    <nav>
+      <a href="/painel">Início</a>
+      <a href="/criarevento">Criar Evento</a>
+      <a href="/perfil">Perfil</a>
+    </nav>
+  </header>
+
+  <main class="meus-eventos">
+    <h1>Meus Eventos</h1>
+    
+    <div class="tabs">
+      <button class="btn btn-primary tab-button active" onclick="showTab('criados', this)">Eventos Criados</button>
+      <button class="btn btn-secondary tab-button" onclick="showTab('inscritos', this)">Eventos Inscritos</button>
+    </div>
+
+    <div id="criados" class="tab-content active">
+      <h2>Eventos que Criei</h2>
+      <div id="eventos-criados" class="eventos-grid">
+        <!-- Eventos criados serão carregados aqui -->
+      </div>
+    </div>
+
+    <div id="inscritos" class="tab-content">
+      <h2>Eventos em que me Inscrevi</h2>
+      <div id="eventos-inscritos" class="eventos-grid">
+        <!-- Eventos inscritos serão carregados aqui -->
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let userId = null;
+
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        // Obter dados do usuário
+        const userResponse = await fetch('/api/me');
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          userId = userData.id_unico;
+          
+          // Carregar eventos
+          loadEventosCriados();
+          loadEventosInscritos();
+        } else {
+          window.location.href = '/login';
+        }
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        window.location.href = '/login';
+      }
+    });
+
+    // Função para alternar entre abas
+    function showTab(tabName, clickedButton) {
+      // Esconder todas as abas
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-secondary');
+      });
+
+      // Mostrar aba selecionada
+      document.getElementById(tabName).classList.add('active');
+
+      // Ativar botão clicado
+      if (clickedButton) {
+        clickedButton.classList.add('active');
+        clickedButton.classList.remove('btn-secondary');
+        clickedButton.classList.add('btn-primary');
+      }
+    }
+
+    // Carregar eventos criados pelo usuário
+    async function loadEventosCriados() {
+      try {
+        const response = await fetch('/api/eventos');
+        if (response.ok) {
+          const eventos = await response.json();
+          const eventosCriados = eventos.filter(evento => evento.criador_id === userId);
+          renderEventos('eventos-criados', eventosCriados, 'criado');
+        }
+      } catch (error) {
+        console.error('Erro ao carregar eventos criados:', error);
+      }
+    }
+
+    // Carregar eventos em que o usuário se inscreveu
+    async function loadEventosInscritos() {
+      try {
+        // Buscar inscrições do usuário
+        const inscricoesResponse = await fetch(`/api/inscricoes?participante=${userId}`);
+        if (inscricoesResponse.ok) {
+          const inscricoes = await inscricoesResponse.json();
+
+          if (inscricoes.length === 0) {
+            document.getElementById('eventos-inscritos').innerHTML = '<p>Você ainda não se inscreveu em nenhum evento.</p>';
+            return;
+          }
+
+          // Buscar detalhes dos eventos
+          const eventosInscritos = [];
+          for (const inscricao of inscricoes) {
+            try {
+              const eventoResponse = await fetch(`/api/eventos/${inscricao.id_evento}`);
+              if (eventoResponse.ok) {
+                const evento = await eventoResponse.json();
+                evento.status_inscricao = inscricao.status;
+                evento.data_inscricao = inscricao.data_de_inscricao;
+                eventosInscritos.push(evento);
+              }
+            } catch (err) {
+              console.error('Erro ao buscar evento:', err);
+            }
+          }
+
+          renderEventos('eventos-inscritos', eventosInscritos, 'inscrito');
+        } else {
+          document.getElementById('eventos-inscritos').innerHTML = '<p>Erro ao carregar eventos inscritos.</p>';
+        }
+      } catch (error) {
+        console.error('Erro ao carregar eventos inscritos:', error);
+        document.getElementById('eventos-inscritos').innerHTML = '<p>Erro ao carregar eventos inscritos.</p>';
+      }
+    }
+
+    // Renderizar eventos
+    function renderEventos(containerId, eventos, tipo) {
+      const container = document.getElementById(containerId);
+      
+      if (eventos.length === 0) {
+        container.innerHTML = `<p>Nenhum evento ${tipo} encontrado.</p>`;
+        return;
+      }
+
+      container.innerHTML = '';
+      
+      eventos.forEach(evento => {
+        const eventoElement = document.createElement('div');
+        eventoElement.className = 'evento-card';
+        eventoElement.innerHTML = `
+          <h3>${evento.nome}</h3>
+          <p><strong>Data:</strong> ${new Date(evento.data).toLocaleDateString('pt-BR')}</p>
+          <p><strong>Local:</strong> ${evento.local}</p>
+          <p><strong>Valor:</strong> R$ ${evento.valor || '0,00'}</p>
+          <div class="evento-acoes">
+            ${tipo === 'criado' ?
+              `<button class="btn btn-primary btn-sm" onclick="verInscritos(${evento.id_unico})">Ver Inscritos</button>` :
+              `<a href="/checkin?evento=${evento.id_unico}" class="btn btn-checkin btn-sm">Fazer Check-in</a>`
+            }
+          </div>
+        `;
+        container.appendChild(eventoElement);
+      });
+    }
+
+    // Ver inscritos de um evento
+    async function verInscritos(eventoId) {
+      try {
+        const response = await fetch(`/api/inscricoes?evento=${eventoId}`);
+        if (response.ok) {
+          const inscricoes = await response.json();
+
+          if (inscricoes.length === 0) {
+            alert('Nenhum participante inscrito neste evento ainda.');
+            return;
+          }
+
+          // Buscar dados dos participantes
+          let participantesInfo = '';
+          for (const inscricao of inscricoes) {
+            try {
+              const userResponse = await fetch(`/api/usuarios/${inscricao.id_participante}`);
+              if (userResponse.ok) {
+                const usuario = await userResponse.json();
+                const dataInscricao = new Date(inscricao.data_de_inscricao).toLocaleDateString('pt-BR');
+                participantesInfo += `• ${usuario.nome} (${usuario.email}) - Inscrito em: ${dataInscricao} - Status: ${inscricao.status}\n`;
+              }
+            } catch (err) {
+              participantesInfo += `• Usuário ID ${inscricao.id_participante} - Status: ${inscricao.status}\n`;
+            }
+          }
+
+          alert(`Participantes inscritos (${inscricoes.length}):\n\n${participantesInfo}`);
+        } else {
+          alert('Erro ao carregar lista de inscritos.');
+        }
+      } catch (error) {
+        console.error('Erro ao buscar inscritos:', error);
+        alert('Erro ao carregar lista de inscritos.');
+      }
+    }
+  </script>
+</body>
+</html>

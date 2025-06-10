@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faça seu Login</title>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+  <div class="container">
+    <div class="login-box">
+
+      <img src="/assets/logo.png" alt="Logo do Projeto" class="logo-projeto">
+
+      <h2>Login</h2>
+      <form id="login-form">
+        <input type="email" id="email" name="email" placeholder="E-mail" required>
+
+        <input type="password" id="senha" name="senha" placeholder="Senha" required>
+
+        <button type="submit">Entrar</button>
+      </form>
+
+      <!-- Botão para recuperar senha -->
+      <a href="/recuperarsenha" class="extra-button">Esqueci minha senha</a>
+
+      <!-- Botão para cadastro -->
+      <a href="/cadastro" class="extra-button">Criar nova conta</a>
+
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async function(event) {
+      event.preventDefault(); // Evita o envio do formulário
+
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+
+      // Verifica se os campos não estão vazios (validação simples)
+      if (!email || !senha) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, senha })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Login bem-sucedido, redirecionar para o painel
+          window.location.href = "/painel";
+        } else {
+          // Mostrar erro
+          alert(data.error || 'Erro ao fazer login');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro de conexão. Tente novamente.');
+      }
+    });
+  </script>
+</body>
+</html>

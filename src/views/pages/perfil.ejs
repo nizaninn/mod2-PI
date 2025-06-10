@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Perfil - Checkly</title>
+  <link rel="stylesheet" href="/css/perfil.css">
+</head>
+<body>
+  <header class="top-nav">
+    <img src="/assets/logo.png" alt="Checkly" class="logo" />
+    <nav>
+      <a href="/painel">Início</a>
+      <a href="/perfil">Perfil</a>
+    </nav>
+  </header>
+
+  <main class="perfil">
+    <h1>Meu Perfil</h1>
+    
+    <div class="perfil-container">
+      <section class="dados-usuario">
+        <h2>Dados Pessoais</h2>
+        <div class="info-item">
+          <label>Nome:</label>
+          <span id="user-name">Carregando...</span>
+        </div>
+        <div class="info-item">
+          <label>Email:</label>
+          <span id="user-email">Carregando...</span>
+        </div>
+        <div class="info-item">
+          <label>Tipo de Usuário:</label>
+          <span id="user-role">Carregando...</span>
+        </div>
+      </section>
+
+      <section class="pontuacao">
+        <h2>Pontuação</h2>
+        <div class="pontos-display">
+          <span id="total-pontos">0</span>
+          <label>Pontos Totais</label>
+        </div>
+      </section>
+
+      <section class="acoes">
+        <h2>Ações</h2>
+        <div class="btn-group">
+          <a href="/painel" class="btn btn-secondary">Voltar ao Painel</a>
+          <a href="/meuevento" class="btn btn-primary">Meus Eventos</a>
+          <a href="/estatisticas" class="btn btn-success">Ver Estatísticas</a>
+          <button id="logout-btn" class="btn btn-danger">Sair da Conta</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Carregar dados do usuário
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        // Carregar dados do usuário
+        const userResponse = await fetch('/api/me');
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          document.getElementById('user-name').textContent = userData.nome;
+          document.getElementById('user-email').textContent = userData.email;
+          document.getElementById('user-role').textContent = userData.role === 'criador' ? 'Criador de Eventos' : 'Participante';
+          
+          // Carregar pontos do usuário
+          const pointsResponse = await fetch(`/api/pontos/${userData.id_unico}`);
+          if (pointsResponse.ok) {
+            const pointsData = await pointsResponse.json();
+            document.getElementById('total-pontos').textContent = pointsData.total_pontos || 0;
+          }
+        } else {
+          window.location.href = '/login';
+        }
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        window.location.href = '/login';
+      }
+    });
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', async function(e) {
+      e.preventDefault();
+      if (confirm('Tem certeza que deseja sair?')) {
+        try {
+          const response = await fetch('/logout', { method: 'POST' });
+          if (response.ok) {
+            window.location.href = '/login';
+          }
+        } catch (error) {
+          console.error('Erro ao fazer logout:', error);
+          window.location.href = '/login';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

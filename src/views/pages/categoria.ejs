@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventos por Categoria - Checkly</title>
+  <link rel="stylesheet" href="/css/categoria.css">
+</head>
+<body>
+  <header class="top-nav">
+    <img src="/assets/logo.png" alt="Checkly" class="logo" />
+    <nav>
+      <a href="/painel">Início</a>
+      <a href="/perfil">Perfil</a>
+    </nav>
+  </header>
+
+  <main class="categoria">
+    <h1 id="categoria-nome">Carregando categoria...</h1>
+    
+    <div class="eventos-container">
+      <div id="eventos-lista" class="eventos-grid">
+        <!-- Eventos da categoria serão carregados aqui -->
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let categoriaId = null;
+
+    document.addEventListener('DOMContentLoaded', async function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      categoriaId = urlParams.get('id');
+
+      if (!categoriaId) {
+        alert('ID da categoria não fornecido');
+        window.location.href = '/painel';
+        return;
+      }
+
+      try {
+        // Carregar dados da categoria
+        const categoriaResponse = await fetch(`/api/categorias/${categoriaId}`);
+        if (categoriaResponse.ok) {
+          const categoria = await categoriaResponse.json();
+          document.getElementById('categoria-nome').textContent = `Eventos de ${categoria.nome}`;
+        }
+
+        // Carregar eventos da categoria
+        const eventosResponse = await fetch('/api/eventos');
+        if (eventosResponse.ok) {
+          const eventos = await eventosResponse.json();
+          const eventosDaCategoria = eventos.filter(evento => evento.categoria_id == categoriaId);
+          renderEventos(eventosDaCategoria);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        alert('Erro ao carregar dados da categoria');
+        window.location.href = '/painel';
+      }
+    });
+
+    function renderEventos(eventos) {
+      const container = document.getElementById('eventos-lista');
+      
+      if (eventos.length === 0) {
+        container.innerHTML = '<p>Nenhum evento encontrado nesta categoria.</p>';
+        return;
+      }
+
+      container.innerHTML = '';
+      
+      eventos.forEach(evento => {
+        const eventoElement = document.createElement('div');
+        eventoElement.className = 'evento-card';
+        eventoElement.innerHTML = `
+          <h3>${evento.nome}</h3>
+          <p><strong>Data:</strong> ${new Date(evento.data).toLocaleDateString('pt-BR')}</p>
+          <p><strong>Local:</strong> ${evento.local}</p>
+          <p><strong>Valor:</strong> R$ ${evento.valor || '0,00'}</p>
+          <div class="evento-acoes">
+            <a href="/inscrever?evento=${evento.id_unico}" class="btn btn-primary">Ver Detalhes</a>
+          </div>
+        `;
+        container.appendChild(eventoElement);
+      });
+    }
+  </script>
+</body>
+</html>

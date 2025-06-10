@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscrever-se no Evento - Checkly</title>
+  <link rel="stylesheet" href="/css/inscrever.css">
+</head>
+<body>
+  <header class="top-nav">
+    <img src="/assets/logo.png" alt="Checkly" class="logo" />
+    <nav>
+      <a href="/painel">Início</a>
+      <a href="/perfil">Perfil</a>
+    </nav>
+  </header>
+
+  <main class="inscrever">
+    <div class="evento-detalhes" id="evento-detalhes">
+      <h1 id="evento-nome">Carregando evento...</h1>
+      <div class="evento-info">
+        <p><strong>Data:</strong> <span id="evento-data">--</span></p>
+        <p><strong>Local:</strong> <span id="evento-local">--</span></p>
+        <p><strong>Valor:</strong> R$ <span id="evento-valor">--</span></p>
+        <p><strong>Descrição:</strong></p>
+        <p id="evento-descricao">--</p>
+      </div>
+      
+      <div class="acoes btn-group">
+        <button id="btn-inscrever" class="btn btn-success btn-lg">Inscrever-se</button>
+        <a href="/painel" class="btn btn-secondary">Voltar</a>
+      </div>
+      
+      <div id="status-inscricao" style="display: none;">
+        <p id="status-message"></p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let eventoId = null;
+
+    // Carregar dados do evento
+    document.addEventListener('DOMContentLoaded', async function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      eventoId = urlParams.get('evento');
+
+      if (!eventoId) {
+        alert('ID do evento não fornecido');
+        window.location.href = '/painel';
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/eventos/${eventoId}`);
+        if (response.ok) {
+          const evento = await response.json();
+          document.getElementById('evento-nome').textContent = evento.nome;
+          document.getElementById('evento-data').textContent = new Date(evento.data).toLocaleDateString('pt-BR');
+          document.getElementById('evento-local').textContent = evento.local;
+
+          // Formatar valor corretamente
+          const valor = parseFloat(evento.valor) || 0;
+          document.getElementById('evento-valor').textContent = valor.toFixed(2).replace('.', ',');
+
+          document.getElementById('evento-descricao').textContent = evento.descricao || 'Sem descrição disponível';
+        } else {
+          throw new Error('Evento não encontrado');
+        }
+      } catch (error) {
+        console.error('Erro ao carregar evento:', error);
+        alert('Erro ao carregar dados do evento');
+        window.location.href = '/painel';
+      }
+    });
+
+    // Inscrever-se no evento
+    document.getElementById('btn-inscrever').addEventListener('click', async function() {
+      if (!eventoId) {
+        alert('ID do evento não encontrado');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/inscricoes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            id_evento: eventoId,
+            token_de_confirmacao: `token_${Date.now()}`
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById('btn-inscrever').style.display = 'none';
+          document.getElementById('status-inscricao').style.display = 'block';
+          document.getElementById('status-message').innerHTML = `
+            <strong>Inscrição realizada com sucesso!</strong><br>
+            Agora você pode fazer check-in no evento.<br>
+            <a href="/checkin?evento=${eventoId}" class="btn btn-checkin btn-lg">Fazer Check-in</a>
+          `;
+        } else {
+          alert(data.error || 'Erro ao se inscrever no evento');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro de conexão. Tente novamente.');
+      }
+    });
+  </script>
+</body>
+</html>

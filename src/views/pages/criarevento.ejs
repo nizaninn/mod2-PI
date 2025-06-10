@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Criar Evento</title>
+  <link rel="stylesheet" href="/css/criarevento.css" />
+</head>
+<body>
+  <header class="top-nav">
+    <img src="/assets/logo.png" alt="Checkly" class="logo" />
+    <nav>
+      <a href="/painel">Início</a>
+      <a href="/perfil">Perfil</a>
+    </nav>
+  </header>
+
+  <main class="criar">
+    <h1>Criar Novo Evento</h1>
+    <form class="formulario" id="criar-evento-form">
+      <label>Nome do Evento</label>
+      <input type="text" id="nome" placeholder="Digite o nome" required />
+
+      <label>Data</label>
+      <input type="date" id="data" required />
+
+      <label>Local</label>
+      <input type="text" id="local" placeholder="Ex: Arena Paulista" required />
+
+      <label>Categoria</label>
+      <select id="categoria" required>
+        <option value="">Carregando categorias...</option>
+      </select>
+
+      <label>Descrição</label>
+      <textarea id="descricao" placeholder="Descreva seu evento..." rows="5"></textarea>
+
+      <label>Valor do Ingresso (R$)</label>
+      <input type="number" id="valor" placeholder="Ex: 150" step="0.01" min="0" />
+
+      <button type="submit" class="btn btn-success btn-lg btn-block">Publicar Evento</button>
+    </form>
+  </main>
+
+  <script>
+    // Carregar categorias ao carregar a página
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        const response = await fetch('/api/categorias');
+        if (response.ok) {
+          const categorias = await response.json();
+          const selectCategoria = document.getElementById('categoria');
+          selectCategoria.innerHTML = '<option value="">Selecione uma categoria</option>';
+
+          categorias.forEach(categoria => {
+            const option = document.createElement('option');
+            option.value = categoria.id_unico;
+            option.textContent = categoria.nome;
+            selectCategoria.appendChild(option);
+          });
+        } else {
+          console.error('Erro ao carregar categorias');
+          // Fallback para categorias estáticas
+          const selectCategoria = document.getElementById('categoria');
+          selectCategoria.innerHTML = `
+            <option value="">Selecione uma categoria</option>
+            <option value="1">Show</option>
+            <option value="2">Corporativo</option>
+            <option value="3">Esporte</option>
+            <option value="4">Cultural</option>
+            <option value="5">Saúde e Lifestyle</option>
+          `;
+        }
+      } catch (error) {
+        console.error('Erro ao carregar categorias:', error);
+        // Fallback para categorias estáticas
+        const selectCategoria = document.getElementById('categoria');
+        selectCategoria.innerHTML = `
+          <option value="">Selecione uma categoria</option>
+          <option value="1">Show</option>
+          <option value="2">Corporativo</option>
+          <option value="3">Esporte</option>
+          <option value="4">Cultural</option>
+          <option value="5">Saúde e Lifestyle</option>
+        `;
+      }
+    });
+
+    document.getElementById('criar-evento-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const nome = document.getElementById('nome').value;
+      const data = document.getElementById('data').value;
+      const local = document.getElementById('local').value;
+      const categoria_id = document.getElementById('categoria').value;
+      const descricao = document.getElementById('descricao').value;
+      const valor = document.getElementById('valor').value;
+
+      // Validações
+      if (!nome || !data || !local || !categoria_id) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+
+      try {
+        console.log('Enviando dados do evento:', {
+          nome,
+          data,
+          local,
+          categoria_id: parseInt(categoria_id),
+          descricao,
+          valor: valor ? parseFloat(valor) : 0
+        });
+
+        const response = await fetch('/api/eventos', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nome,
+            data,
+            local,
+            categoria_id: parseInt(categoria_id),
+            descricao,
+            valor: valor ? parseFloat(valor) : 0
+          })
+        });
+
+        const data_response = await response.json();
+        console.log('Resposta do servidor:', data_response);
+
+        if (response.ok && data_response.success) {
+          alert('Evento criado com sucesso!');
+          window.location.href = '/painel';
+        } else {
+          console.error('Erro na resposta:', data_response);
+          alert(data_response.error || 'Erro ao criar evento');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro de conexão. Tente novamente.');
+      }
+    });
+  </script>
+</body>
+</html>
