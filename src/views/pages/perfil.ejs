@@ -5,54 +5,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meu Perfil - Checkly</title>
   <link rel="stylesheet" href="/css/perfil.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
   <header class="top-nav">
     <img src="/assets/logo.png" alt="Checkly" class="logo" />
-    <nav>
-      <a href="/painel">Início</a>
-      <a href="/perfil">Perfil</a>
+    <nav class="menu-links">
+      <a href="/painel"><i class="fas fa-home"></i> Início</a>
+      <a href="/perfil" class="active"><i class="fas fa-user"></i> Perfil</a>
+      <a href="/estatisticas"><i class="fas fa-chart-bar"></i> Estatísticas</a>
     </nav>
   </header>
 
   <main class="perfil">
-    <h1>Meu Perfil</h1>
-    
-    <div class="perfil-container">
-      <section class="dados-usuario">
-        <h2>Dados Pessoais</h2>
-        <div class="info-item">
-          <label>Nome:</label>
-          <span id="user-name">Carregando...</span>
-        </div>
-        <div class="info-item">
-          <label>Email:</label>
-          <span id="user-email">Carregando...</span>
-        </div>
-        <div class="info-item">
-          <label>Tipo de Usuário:</label>
-          <span id="user-role">Carregando...</span>
-        </div>
-      </section>
+    <h1><i class="fas fa-user-circle"></i> Meu Perfil</h1>
 
-      <section class="pontuacao">
-        <h2>Pontuação</h2>
-        <div class="pontos-display">
-          <span id="total-pontos">0</span>
-          <label>Pontos Totais</label>
+    <!-- Informações Pessoais -->
+    <section class="info-pessoal">
+      <div class="avatar-container">
+        <img src="https://via.placeholder.com/200x200/ff7043/ffffff?text=👤" alt="Avatar" class="avatar" id="user-avatar">
+      </div>
+      <div class="user-info">
+        <h2 id="user-name">Carregando...</h2>
+        <div class="info-item">
+          <span class="info-label"><i class="fas fa-envelope"></i> Email:</span>
+          <span class="info-value" id="user-email">Carregando...</span>
         </div>
-      </section>
+        <div class="info-item">
+          <span class="info-label"><i class="fas fa-user-tag"></i> Tipo:</span>
+          <span class="info-value highlight" id="user-role">Carregando...</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label"><i class="fas fa-calendar"></i> Membro desde:</span>
+          <span class="info-value" id="member-since">Hoje</span>
+        </div>
+      </div>
+    </section>
 
-      <section class="acoes">
-        <h2>Ações</h2>
-        <div class="btn-group">
-          <a href="/painel" class="btn btn-secondary">Voltar ao Painel</a>
-          <a href="/meuevento" class="btn btn-primary">Meus Eventos</a>
-          <a href="/estatisticas" class="btn btn-success">Ver Estatísticas</a>
-          <button id="logout-btn" class="btn btn-danger">Sair da Conta</button>
+    <!-- Dashboard de Pontuação -->
+    <section class="pontuacao-section">
+      <h2><i class="fas fa-trophy"></i> Dashboard de Pontuação</h2>
+      <div class="dashboard">
+        <div class="painel">
+          <div class="resumo">
+            <div class="painel-item">
+              <h3><i class="fas fa-star"></i> Pontos Totais</h3>
+              <p class="pontos" id="total-pontos">0</p>
+            </div>
+            <div class="painel-item">
+              <h3><i class="fas fa-calendar-check"></i> Eventos Participados</h3>
+              <p id="eventos-participados">0</p>
+            </div>
+            <div class="painel-item">
+              <h3><i class="fas fa-medal"></i> Ranking</h3>
+              <p id="user-ranking">#1</p>
+            </div>
+            <div class="painel-item">
+              <h3><i class="fas fa-fire"></i> Sequência</h3>
+              <p id="sequencia-eventos">0 dias</p>
+            </div>
+          </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+
+    <!-- Histórico de Atividades -->
+    <section class="pontuacao-section">
+      <div class="painel">
+        <div class="historico">
+          <h3><i class="fas fa-history"></i> Histórico de Atividades</h3>
+          <div class="atividades" id="atividades-lista">
+            <div class="atividade">
+              <span class="atividade-data">Hoje</span>
+              <span class="atividade-descricao">Bem-vindo ao Checkly!</span>
+              <span class="atividade-pontos positivo">+0 pts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ações Rápidas -->
+    <section class="pontuacao-section">
+      <h2><i class="fas fa-bolt"></i> Ações Rápidas</h2>
+      <div class="acoes">
+        <a href="/painel" class="botao">
+          <i class="fas fa-home"></i> Voltar ao Painel
+        </a>
+        <a href="/meuevento" class="botao">
+          <i class="fas fa-calendar-alt"></i> Meus Eventos
+        </a>
+        <a href="/estatisticas" class="botao">
+          <i class="fas fa-chart-line"></i> Ver Estatísticas
+        </a>
+        <a href="/criarevento" class="botao">
+          <i class="fas fa-plus-circle"></i> Criar Evento
+        </a>
+        <button id="logout-btn" class="botao" style="background-color: #dc3545;">
+          <i class="fas fa-sign-out-alt"></i> Sair da Conta
+        </button>
+      </div>
+    </section>
   </main>
 
   <script>
@@ -65,14 +118,33 @@
           const userData = await userResponse.json();
           document.getElementById('user-name').textContent = userData.nome;
           document.getElementById('user-email').textContent = userData.email;
-          document.getElementById('user-role').textContent = userData.role === 'criador' ? 'Criador de Eventos' : 'Participante';
-          
-          // Carregar pontos do usuário
-          const pointsResponse = await fetch(`/api/pontos/${userData.id_unico}`);
-          if (pointsResponse.ok) {
-            const pointsData = await pointsResponse.json();
-            document.getElementById('total-pontos').textContent = pointsData.total_pontos || 0;
+          const roleText = userData.role === 'criador' ? 'Criador de Eventos' : 'Participante';
+          document.getElementById('user-role').textContent = roleText;
+
+          // Atualizar avatar baseado no tipo de usuário
+          const avatar = document.getElementById('user-avatar');
+          if (userData.role === 'criador') {
+            avatar.src = 'https://via.placeholder.com/200x200/ff7043/ffffff?text=👨‍💼';
+          } else {
+            avatar.src = 'https://via.placeholder.com/200x200/28a745/ffffff?text=👤';
           }
+
+          // Carregar pontos do usuário
+          try {
+            const pointsResponse = await fetch(`/api/pontos/${userData.id_unico}`);
+            if (pointsResponse.ok) {
+              const pointsData = await pointsResponse.json();
+              document.getElementById('total-pontos').textContent = pointsData.total_pontos || 0;
+            }
+          } catch (error) {
+            console.log('Pontos não disponíveis ainda');
+            document.getElementById('total-pontos').textContent = '0';
+          }
+
+          // Simular dados de estatísticas
+          document.getElementById('eventos-participados').textContent = Math.floor(Math.random() * 10);
+          document.getElementById('user-ranking').textContent = '#' + Math.floor(Math.random() * 100 + 1);
+          document.getElementById('sequencia-eventos').textContent = Math.floor(Math.random() * 30) + ' dias';
         } else {
           window.location.href = '/login';
         }

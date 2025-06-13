@@ -53,8 +53,12 @@ DB_NAME=nome_do_banco
 Para iniciar o projeto:
 
 ```bash
+npm start
+# ou
 node server.js
 ```
+
+> ⚠️ **Importante**: O projeto foi reorganizado! Agora o `server.js` e `package.json` estão na raiz do projeto, seguindo as melhores práticas do Node.js.
 
  
 ### 5. Acesse no navegador
@@ -65,130 +69,67 @@ Abra seu navegador e acesse:
 http://localhost:3000
 ```
 
-Estrutura de Pastas do Projeto
-````bash
+## 📁 Estrutura de Pastas do Projeto (Atualizada)
 
+```bash
+checkly-system/
+├── server.js                    # 🚀 Servidor principal (movido para raiz)
+├── package.json                 # 📦 Dependências e scripts (movido para raiz)
+├── package-lock.json           # 🔒 Lock das dependências
+├── node_modules/               # 📚 Módulos do Node.js (movido para raiz)
+├── README.md                   # 📖 Documentação
+│
+└── src/                        # 📂 Código fonte
+    ├── assets/                 # 🖼️ Arquivos estáticos (imagens, etc.)
+    ├── config/                 # ⚙️ Configurações (banco de dados, etc.)
+    ├── controllers/            # 🎮 Controladores da aplicação
+    ├── models/                 # 📊 Modelos de dados
+    ├── routes/                 # 🛣️ Rotas da API
+    ├── services/               # 🔧 Serviços auxiliares
+    ├── documentos/             # 📄 Documentação adicional
+    └── views/                  # 🎨 Templates e interface
+        ├── pages/              # 📄 Páginas HTML (EJS)
+        ├── css/                # 🎨 Arquivos de estilo
+        └── js/                 # ⚡ Scripts JavaScript
+```
 
-PI/
-├── mvc-boilerplate/                    
-│   ├── controllers/
-|   ├── assets/       
-│   ├── models/              
-│   ├── routes/             
-│   ├── services/           
-│   ├── tests/        
-│   └── views/
-│   └── scripts/
-│   └── documentos/
-│   └── config/
-│   └── .env.example/
-│   └── .gitignore/
-│   └── .jest.config.js/
-│   └── readme.md/
-│   └── rest.http/
-│   └── server.js/              
-│
-├── node_modules/                    
-│   ├── .bin
-|   ├── accepts      
-│   ├── ansi-styles            
-│   ├── async            
-│   ├── balanced-match          
-│   ├── body-parser       
-│   └── brace-expansion
-│   └── bytes
-│   └── call-bind-apply-help
-│   └── call-bound
-│   └── chalk
-│   └── color-convert
-│   └── color-name
-│   └── concat-map
-│   └── content-disposition
-│   └── content-type
-│   └── cookie
-│   └── cookie-signature
-│   └── debug
-│   └── depd
-│   └── dotenev
-│   └── dunder-proto
-│   └── ee-first
-│   └── ejs
-│   └── encodeurl
-│   └── es-define-property
-│   └── es-errors
-│   └── es-object-atoms
-│   └── escape-html
-│   └── estag
-│   └── express
-│   └── filelist
-│   └── finalhandler
-│   └── forwarded
-│   └── fresh
-│   └── function-bind
-│   └── get-intrinsic
-│   └── get-proto
-│   └── gopd
-│   └── has-flag
-│   └── has-symbols
-│   └── hasown
-│   └── http-errors
-│   └── iconv-lite
-│   └── inherits
-│   └── ipaddr.js
-│   └── is-promise
-│   └── jake
-│   └── math-intrinsics
-│   └── media-typer
-│   └── merge-descripions
-│   └── mime-db
-│   └── mime-types
-│   └── minimatch
-│   └── ms
-│   └── negociator
-│   └── object-inspect
-│   └── on-finished
-│   └── once
-│   └── parseurl
-│   └── path-to-regexp
-│   └── pg
-│   └── pg-cloudflare
-│   └── pg-connection-string
-│   └── pg-int8
-│   └── pg-pool
-│   └── pg-protocol
-│   └── pg-types
-│   └── pgpass
-│   └── postgress-aray
-│   └── postress-bytea
-│   └── prostgress-date
-│   └── postgress-interval
-│   └── proxy-addr
-│   └── qs
-│   └── range-parser
-│   └── raw-body
-│   └── router
-│   └── safe-buffer
-│   └── saffer-buffer
-│   └── send
-│   └── serv-static
-│   └── setprototypeof
-│   └── side-channel
-│   └── side-channel-list
-│   └── side-channel-map
-│   └── side-channel-weak
-│   └── split2
-│   └── statuses
-│   └── supports-color
-│   └── toidentifier
-│   └── type-is
-│   └── unpipe
-│   └── vary
-│   └── wrappy
-│   └── xtend
-|
-├── package-lock.json/
-├── package.json/
-│
-├──PI-wad.md                  
-└── 
+## 🔧 Melhorias Implementadas
+
+### ✅ Reorganização da Estrutura
+- Movido `server.js` e `package.json` para a raiz (padrão Node.js)
+- Removido arquivos duplicados
+- Estrutura mais limpa e organizada
+
+### ✅ Correções de Autenticação
+- Sistema de sessões funcionando corretamente
+- Middleware de autenticação com logs detalhados
+- Botão "Perfil" agora funciona sem redirecionar para login
+
+### ✅ Melhorias de Interface
+- Estilos modernos e responsivos
+- Formulários com foco e transições suaves
+- Navegação fixa e hover effects
+- Animações e feedback visual
+
+### ✅ Funcionalidades Corrigidas
+- Login/logout funcionando
+- Perfil do usuário acessível
+- Todas as rotas protegidas funcionando
+- Sistema de pontos e check-in operacional
+
+## 🚀 Como testar
+
+1. Faça login ou cadastre-se
+2. Acesse o painel principal
+3. Teste a criação de eventos
+4. Verifique o sistema de inscrições
+5. Teste o check-in com QR Code
+6. Acesse as estatísticas
+
+## 📞 Suporte
+
+Se encontrar algum problema, verifique:
+- Se o servidor está rodando na porta 3000
+- Se todas as dependências foram instaladas
+- Se não há conflitos de porta
 

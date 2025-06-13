@@ -1,5 +1,5 @@
 // controllers/UsuarioController.js
-const pool = require('../config/db');
+// const pool = require('../config/db'); // Não usado no momento - usando array em memória
 
 // Armazenamento temporário de usuários (em produção seria no banco)
 let usuariosCadastrados = [
@@ -104,21 +104,32 @@ exports.loginUsuario = async (req, res) => {
 // Obter dados do usuário logado
 exports.obterUsuarioLogado = async (req, res) => {
   try {
+    console.log('👤 Obtendo dados do usuário logado');
+    console.log('📋 Session userId:', req.session.userId);
+
     if (!req.session.userId) {
+      console.log('❌ Usuário não autenticado');
       return res.status(401).json({ error: 'Usuário não autenticado' });
     }
 
-    const result = await pool.query(
-      'SELECT id_unico, nome, email, role FROM usuario WHERE id_unico = $1',
-      [req.session.userId]
-    );
+    // Buscar usuário no array de usuários cadastrados
+    const usuario = usuariosCadastrados.find(u => u.id_unico === req.session.userId);
 
-    if (result.rows.length === 0) {
+    if (!usuario) {
+      console.log('❌ Usuário não encontrado no array');
       return res.status(404).json({ error: 'Usuário não encontrado' });
     }
 
-    res.json(result.rows[0]);
+    console.log('✅ Usuário encontrado:', usuario.email);
+
+    res.json({
+      id_unico: usuario.id_unico,
+      nome: usuario.nome,
+      email: usuario.email,
+      role: usuario.role
+    });
   } catch (err) {
+    console.error('❌ Erro ao obter usuário:', err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -126,9 +137,20 @@ exports.obterUsuarioLogado = async (req, res) => {
 // Listar todos os usuários
 exports.listarUsuarios = async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM usuario');
-    res.status(200).json(result.rows);
+    console.log('📋 Listando todos os usuários');
+    console.log('👥 Total de usuários:', usuariosCadastrados.length);
+
+    // Retornar usuários sem a senha
+    const usuariosSemSenha = usuariosCadastrados.map(u => ({
+      id_unico: u.id_unico,
+      nome: u.nome,
+      email: u.email,
+      role: u.role
+    }));
+
+    res.status(200).json(usuariosSemSenha);
   } catch (err) {
+    console.error('❌ Erro ao listar usuários:', err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -138,14 +160,26 @@ exports.buscarUsuario = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const result = await pool.query('SELECT * FROM usuario WHERE id_unico = $1', [id]);
+    console.log('🔍 Buscando usuário por ID:', id);
 
-    if (result.rows.length === 0) {
+    const usuario = usuariosCadastrados.find(u => u.id_unico === parseInt(id));
+
+    if (!usuario) {
+      console.log('❌ Usuário não encontrado');
       return res.status(404).json({ message: 'Usuário não encontrado' });
     }
 
-    res.status(200).json(result.rows[0]);
+    console.log('✅ Usuário encontrado:', usuario.email);
+
+    // Retornar usuário sem a senha
+    res.status(200).json({
+      id_unico: usuario.id_unico,
+      nome: usuario.nome,
+      email: usuario.email,
+      role: usuario.role
+    });
   } catch (err) {
+    console.error('❌ Erro ao buscar usuário:', err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -155,14 +189,21 @@ exports.excluirUsuario = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const result = await pool.query('DELETE FROM usuario WHERE id_unico = $1 RETURNING *', [id]);
+    console.log('🗑️ Excluindo usuário por ID:', id);
 
-    if (result.rowCount === 0) {
+    const index = usuariosCadastrados.findIndex(u => u.id_unico === parseInt(id));
+
+    if (index === -1) {
+      console.log('❌ Usuário não encontrado para exclusão');
       return res.status(404).json({ message: 'Usuário não encontrado' });
     }
 
+    const usuarioExcluido = usuariosCadastrados.splice(index, 1)[0];
+    console.log('✅ Usuário excluído:', usuarioExcluido.email);
+
     res.status(200).json({ message: 'Usuário excluído com sucesso' });
   } catch (err) {
+    console.error('❌ Erro ao excluir usuário:', err);
     res.status(500).json({ error: err.message });
   }
 };

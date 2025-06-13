@@ -55,6 +55,12 @@ body {
   background-color: #950101;
   padding: 15px 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  box-sizing: border-box;
 }
 
 .top-nav .logo {
@@ -67,29 +73,35 @@ body {
   text-decoration: none;
   margin-left: 25px;
   font-weight: 500;
-  transition: color 0.3s ease;
+  padding: 10px 15px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
 .top-nav nav a:hover {
-  color: #ffcccc;
+  background-color: #FF0000;
+  transform: scale(1.05);
 }
 
 .estatisticas {
   max-width: 1200px;
-  margin: 40px auto;
-  padding: 30px;
+  margin: 0 auto;
+  padding: 120px 30px 50px;
   background-color: #3a1a1a;
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .estatisticas h1 {
   text-align: center;
   margin-bottom: 40px;
-  color: #ffffff;
+  color: #ff7043;
   font-size: 2.5rem;
-  border-bottom: 3px solid #950101;
+  border-bottom: 3px solid #6e1d1d;
   padding-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .stats-container {
