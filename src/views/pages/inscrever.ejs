@@ -15,27 +15,57 @@
     </nav>
   </header>
 
-  <main class="inscrever">
-    <div class="evento-detalhes" id="evento-detalhes">
-      <h1 id="evento-nome">Carregando evento...</h1>
-      <div class="evento-info">
-        <p><strong>Data:</strong> <span id="evento-data">--</span></p>
-        <p><strong>Local:</strong> <span id="evento-local">--</span></p>
-        <p><strong>Valor:</strong> R$ <span id="evento-valor">--</span></p>
-        <p><strong>Descrição:</strong></p>
-        <p id="evento-descricao">--</p>
+  <div class="container">
+    <main class="inscrever">
+      <div class="evento-detalhes" id="evento-detalhes">
+        <div class="evento-conteudo">
+          <h1 id="evento-nome">Carregando evento...</h1>
+
+          <div class="evento-info-principal">
+            <div class="evento-info-item">
+              <div class="icone icone-data"></div>
+              <div class="info">
+                <div class="label">Data</div>
+                <div class="valor" id="evento-data">--</div>
+              </div>
+            </div>
+
+            <div class="evento-info-item">
+              <div class="icone icone-local"></div>
+              <div class="info">
+                <div class="label">Local</div>
+                <div class="valor" id="evento-local">--</div>
+              </div>
+            </div>
+
+            <div class="evento-info-item">
+              <div class="icone icone-ingresso"></div>
+              <div class="info">
+                <div class="label">Valor</div>
+                <div class="valor destaque">R$ <span id="evento-valor">--</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="evento-descricao">
+            <h2>Sobre o Evento</h2>
+            <p id="evento-descricao">--</p>
+          </div>
+
+          <div class="acoes btn-group">
+            <button id="btn-inscrever" class="btn btn-success btn-lg">Inscrever-se</button>
+            <a href="/painel" class="btn btn-secondary">Voltar</a>
+          </div>
+
+          <div id="status-inscricao" style="display: none;">
+            <div class="status">
+              <p id="status-message"></p>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      <div class="acoes btn-group">
-        <button id="btn-inscrever" class="btn btn-success btn-lg">Inscrever-se</button>
-        <a href="/painel" class="btn btn-secondary">Voltar</a>
-      </div>
-      
-      <div id="status-inscricao" style="display: none;">
-        <p id="status-message"></p>
-      </div>
-    </div>
-  </main>
+    </main>
+  </div>
 
   <script>
     let eventoId = null;

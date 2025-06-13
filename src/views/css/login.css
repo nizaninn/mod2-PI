@@ -94,11 +94,22 @@ footer {
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
-    border: 1px solid rgb(204, 204, 204);
+    border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 16px;
     color: #ffffff;
     background-color: #4a0000;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-box input:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.login-box input::placeholder {
+    color: #ccc;
 }
 
 /* Estilo do botão */
@@ -120,10 +131,9 @@ footer {
 
 .logo-projeto {
   display: block;
-  margin-left: 63px;
-  margin-bottom: 20px;
-  width: 100%;           
-  max-width: 200px;      
+  margin: 0 auto 20px;
+  width: 100%;
+  max-width: 200px;
   height: auto;
 }
 /* Estilo para os botões de navegação (recuperar/cadastro) */
@@ -145,4 +155,17 @@ footer {
 .extra-button:hover {
   background-color: #ffffff;
   color: #950101;
+  transform: translateY(-1px);
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .login-box {
+    margin: 20px;
+    padding: 30px 20px;
+  }
+
+  .logo-projeto {
+    max-width: 150px;
+  }
 }

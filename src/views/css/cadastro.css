@@ -40,15 +40,33 @@ body {
   color: #ffffff;
 }
 
-.login-box input {
+.login-box input,
+.login-box select {
   width: 100%;
   padding: 12px;
   margin-bottom: 20px;
-  border: 1px solid rgb(204, 204, 204);
+  border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 16px;
   color: #ffffff;
   background-color: #4a0000;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-box input:focus,
+.login-box select:focus {
+  outline: none;
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.login-box input::placeholder {
+  color: #ccc;
+}
+
+.login-box select option {
+  background-color: #4a0000;
+  color: #ffffff;
 }
 
 .login-box button {
@@ -69,9 +87,39 @@ body {
 
 .logo-projeto {
   display: block;
-  margin-left: 63px;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
   width: 100%;
   max-width: 200px;
   height: auto;
+}
+
+.extra-button {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.extra-button:hover {
+  background-color: #ffffff;
+  color: #950101;
+  transform: translateY(-1px);
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .login-box {
+    margin: 20px;
+    padding: 30px 20px;
+  }
+
+  .logo-projeto {
+    max-width: 150px;
+  }
 }

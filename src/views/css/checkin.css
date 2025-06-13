@@ -54,8 +54,15 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1a0000;
+  background-color: #950101;
   padding: 15px 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -67,25 +74,67 @@ body {
   text-decoration: none;
   color: #fff;
   font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.top-nav nav a:hover {
+  background-color: #FF0000;
+  transform: scale(1.05);
 }
 
 .checkin {
   max-width: 700px;
   margin: 0 auto;
-  padding: 30px 20px;
+  padding: 120px 20px 50px;
   text-align: center;
+}
+
+.checkin h1 {
+  color: #ff7043;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .evento-info {
   background-color: #3a1a1a;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 15px;
   margin-bottom: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  text-align: left;
+}
+
+.evento-info h2 {
+  color: #ff7043;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.evento-info p {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.evento-info strong {
+  color: #ff7043;
+}
+
+.confirmar {
+  background-color: #3a1a1a;
+  padding: 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
 .confirmar p {
-  margin-bottom: 20px;
-  font-size: 16px;
+  margin-bottom: 25px;
+  font-size: 1.2rem;
+  color: #ccc;
 }
 
 .botao-checkin {
@@ -105,8 +154,49 @@ body {
 
 .status {
   margin-top: 20px;
-  background-color: #226622;
-  padding: 15px;
-  border-radius: 8px;
+  background-color: #28a745;
+  padding: 30px;
+  border-radius: 15px;
   font-weight: bold;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.5s ease-in;
+}
+
+.status p {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .checkin {
+    padding: 100px 15px 30px;
+  }
+
+  .checkin h1 {
+    font-size: 2rem;
+  }
+
+  .top-nav {
+    padding: 10px 15px;
+  }
+
+  .logo {
+    width: 80px;
+  }
+
+  .top-nav nav a {
+    margin-left: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .evento-info, .confirmar, .status {
+    padding: 20px;
+  }
 }

@@ -40,9 +40,16 @@ app.use('/js', express.static(path.join(__dirname, 'views/js')));
 
 // Middleware para verificar autenticação
 const requireAuth = (req, res, next) => {
+  console.log('🔐 Verificando autenticação...');
+  console.log('📋 Session ID:', req.sessionID);
+  console.log('👤 User ID na sessão:', req.session?.userId);
+  console.log('📝 Dados da sessão:', req.session);
+
   if (req.session && req.session.userId) {
+    console.log('✅ Usuário autenticado:', req.session.userId);
     return next();
   } else {
+    console.log('❌ Usuário não autenticado, redirecionando para login');
     return res.redirect('/login');
   }
 };
@@ -87,7 +94,13 @@ app.get('/criarevento', requireAuth, (req, res) => {
 });
 
 app.get('/perfil', requireAuth, (req, res) => {
-  res.render('pages/perfil');
+  res.render('pages/perfil', {
+    user: {
+      id: req.session.userId,
+      name: req.session.userName,
+      role: req.session.userRole
+    }
+  });
 });
 
 app.get('/inscrever', requireAuth, (req, res) => {

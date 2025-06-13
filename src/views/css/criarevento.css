@@ -73,11 +73,21 @@ body {
 
 .criar {
   max-width: 700px;
-  margin: 40px auto; /* Mais espaçamento em relação ao topo */
+  margin: 40px auto;
   padding: 30px 20px;
-  background-color: #3a1a1a; /* Cor de fundo mais suave */
+  background-color: #3a1a1a;
   border-radius: 10px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombras sutis */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.criar h1 {
+  text-align: center;
+  color: #ff7043;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  border-bottom: 3px solid #6e1d1d;
+  padding-bottom: 15px;
 }
 
 .formulario {
@@ -88,18 +98,38 @@ body {
 }
 
 input, textarea, select {
-  padding: 12px; /* Aumentando o padding para maior conforto */
-  border-radius: 8px; /* Borda mais suave */
-  border: none;
-  background-color: #5c1d1d; /* Cor mais suave */
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #666;
+  background-color: #5c1d1d;
   color: white;
-  font-size: 1rem; /* Aumentando o tamanho da fonte para mais legibilidade */
-  transition: background-color 0.3s; /* Transição suave para hover */
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 input:focus, textarea:focus, select:focus {
-  background-color: #b10000; /* Cor de foco */
+  background-color: #6d2222;
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
   outline: none;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #ccc;
+}
+
+select option {
+  background-color: #5c1d1d;
+  color: white;
+}
+
+.formulario label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #ff7043;
+  font-size: 1.1rem;
 }
 
 button {
@@ -115,5 +145,30 @@ button {
 }
 
 button:hover {
-  background-color: #d32f2f; /* Cor de hover mais suave */
+  background-color: #d32f2f;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .criar {
+    margin: 20px;
+    padding: 20px 15px;
+  }
+
+  .criar h1 {
+    font-size: 2rem;
+  }
+
+  .top-nav {
+    padding: 10px 15px;
+  }
+
+  .logo {
+    width: 80px;
+  }
+
+  .top-nav nav a {
+    margin-left: 15px;
+    font-size: 14px;
+  }
 }
