@@ -1,8 +1,42 @@
 // const pool = require('../config/db'); // Não usado - usando array em memória
 
 // Array para armazenar eventos em memória
-let eventosCadastrados = [];
-let proximoIdEvento = 1;
+let eventosCadastrados = [
+  {
+    id_unico: 1,
+    nome: "Workshop de Desenvolvimento Web",
+    descricao: "Aprenda as tecnologias mais modernas do desenvolvimento web",
+    data: "2025-01-15",
+    local: "Centro de Convenções São Paulo",
+    valor: 150.00,
+    criador_id: 1,
+    categoria_id: 5,
+    created_at: new Date().toISOString()
+  },
+  {
+    id_unico: 2,
+    nome: "Show da Banda Rock Nacional",
+    descricao: "Uma noite inesquecível com o melhor do rock nacional",
+    data: "2025-01-20",
+    local: "Arena Anhembi",
+    valor: 80.00,
+    criador_id: 1,
+    categoria_id: 1,
+    created_at: new Date().toISOString()
+  },
+  {
+    id_unico: 3,
+    nome: "Conferência de Negócios 2025",
+    descricao: "Networking e palestras sobre empreendedorismo",
+    data: "2025-02-05",
+    local: "Hotel Copacabana Palace",
+    valor: 200.00,
+    criador_id: 1,
+    categoria_id: 2,
+    created_at: new Date().toISOString()
+  }
+];
+let proximoIdEvento = 4;
 
 // Criar evento
 exports.criarEvento = async (req, res) => {
