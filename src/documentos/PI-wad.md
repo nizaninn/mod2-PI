@@ -589,21 +589,6 @@ async function realizarCheckin() {
 
 O sistema Checkly foi desenvolvido como uma aplicação web completa para gerenciamento de eventos com funcionalidades de gamificação. A plataforma permite que criadores organizem eventos e participantes se inscrevam, realizem check-in e acumulem pontos.
 
-#### 4.1.2 Tecnologias Implementadas
-
-**Backend:**
-- **Node.js** com Express.js para servidor web
-- **EJS** como template engine para renderização de páginas
-- **Express-session** para gerenciamento de sessões
-- **Sistema de arrays em memória** para persistência de dados (desenvolvimento)
-- **Arquitetura MVC** completa implementada
-
-**Frontend:**
-- **HTML5** semântico e acessível
-- **CSS3** com design responsivo e moderno
-- **JavaScript ES6+** com Fetch API para comunicação assíncrona
-- **Font Awesome** para iconografia
-- **Design system** consistente em todas as páginas
 
 #### 4.1.3 Funcionalidades Entregues
 
@@ -645,26 +630,26 @@ O sistema Checkly foi desenvolvido como uma aplicação web completa para gerenc
 **Organização de Arquivos:**
 ```
 checkly-system/
-├── server.js                    # Servidor principal
-├── package.json                 # Dependências e scripts
-└── src/                         # Código fonte
-    ├── controllers/             # Lógica de negócio
+├── server.js                   
+├── package.json                 
+└── src/                         
+    ├── controllers/             
     │   ├── UsuarioController.js
     │   ├── EventosController.js
     │   ├── CategoriasController.js
     │   ├── InscricoesController.js
     │   └── CheckinController.js
-    ├── routes/                  # Definição de rotas
+    ├── routes/                  
     │   ├── usuario.js
     │   ├── eventos.js
     │   ├── categorias.js
     │   ├── inscricoes.js
     │   └── checkin.js
-    ├── views/                   # Templates e interface
-    │   ├── pages/               # Páginas HTML (EJS)
-    │   ├── css/                 # Estilos CSS
-    │   └── js/                  # Scripts JavaScript
-    └── assets/                  # Recursos estáticos
+    ├── views/                   
+    │   ├── pages/               
+    │   ├── css/                 
+    │   └── js/                  
+    └── assets/                  
 ```
 
 **Principais Controllers Implementados:**
@@ -689,7 +674,7 @@ Formulário completo para criadores com validação de campos obrigatórios e se
 Página detalhada do evento com botão de inscrição funcional e feedback de confirmação.
 
 **Perfil do Usuário:**
-Dashboard moderno com avatar dinâmico, estatísticas de pontuação e ações rápidas.
+Painel moderno com avatar dinâmico, estatísticas de pontuação e ações rápidas.
 
 #### 4.1.6 Integração Frontend-Backend
 
@@ -697,8 +682,6 @@ Todas as funcionalidades foram implementadas com integração completa:
 - **Comunicação assíncrona** via Fetch API
 - **Validação dupla** no frontend e backend
 - **Tratamento de erros** robusto em todas as operações
-- **Feedback visual** para todas as ações do usuário
-- **Persistência de dados** em arrays estruturados (desenvolvimento)
 
 O sistema demonstra uma aplicação web moderna e funcional, pronta para uso em ambiente de desenvolvimento e facilmente adaptável para produção com banco de dados real.
 
@@ -818,82 +801,4 @@ A experiência de desenvolvimento deste projeto proporcionou aprendizado signifi
 
 ## <a name="c5"></a>5. Referências
 
-### 5.1 Documentação Técnica
-
-**Node.js e Express.js:**
-- Node.js Documentation. *Node.js Official Documentation*. Disponível em: https://nodejs.org/en/docs/. Acesso em: dezembro 2024.
-- Express.js Guide. *Express.js Official Guide*. Disponível em: https://expressjs.com/. Acesso em: dezembro 2024.
-
-**Frontend e Design:**
-- MDN Web Docs. *JavaScript Fetch API*. Mozilla Developer Network. Disponível em: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API. Acesso em: dezembro 2024.
-- Font Awesome Documentation. *Font Awesome Icons*. Disponível em: https://fontawesome.com/docs. Acesso em: dezembro 2024.
-
-### 5.2 Arquitetura e Padrões de Desenvolvimento
-
-**Padrão MVC:**
-- GAMMA, Erich et al. *Design Patterns: Elements of Reusable Object-Oriented Software*. Addison-Wesley Professional, 1994.
-- FOWLER, Martin. *Patterns of Enterprise Application Architecture*. Addison-Wesley Professional, 2002.
-
-**Desenvolvimento Web:**
-- BROWN, Ethan. *Web Development with Node and Express: Leveraging the JavaScript Stack*. 2ª ed. O'Reilly Media, 2019.
-- SIMPSON, Kyle. *You Don't Know JS: ES6 & Beyond*. O'Reilly Media, 2015.
-
-### 5.3 Design e Experiência do Usuário
-
-**UX/UI Design:**
-- KRUG, Steve. *Don't Make Me Think: A Common Sense Approach to Web Usability*. 3ª ed. New Riders, 2014.
-- NORMAN, Don. *The Design of Everyday Things*. Basic Books, 2013.
-
-**Design Responsivo:**
-- MARCOTTE, Ethan. *Responsive Web Design*. A Book Apart, 2011.
-- WROBLEWSKI, Luke. *Mobile First*. A Book Apart, 2011.
-
-### 5.4 Desenvolvimento de APIs e Integração
-
-**RESTful APIs:**
-- FIELDING, Roy Thomas. *Architectural Styles and the Design of Network-based Software Architectures*. Doctoral dissertation, University of California, Irvine, 2000.
-- RICHARDSON, Leonard; RUBY, Sam. *RESTful Web Services*. O'Reilly Media, 2007.
-
-**Segurança Web:**
-- OWASP Foundation. *OWASP Top Ten Web Application Security Risks*. Disponível em: https://owasp.org/www-project-top-ten/. Acesso em: dezembro 2024.
-
-### 5.5 Banco de Dados e Persistência
-
-**PostgreSQL:**
-- PostgreSQL Documentation. *PostgreSQL Official Documentation*. Disponível em: https://www.postgresql.org/docs/. Acesso em: dezembro 2024.
-- KLINE, Kevin E.; KLINE, Daniel. *SQL in a Nutshell*. 4ª ed. O'Reilly Media, 2022.
-
-### 5.6 Metodologias e Boas Práticas
-
-**Desenvolvimento Ágil:**
-- BECK, Kent et al. *Manifesto for Agile Software Development*. Disponível em: https://agilemanifesto.org/. Acesso em: dezembro 2024.
-- COHN, Mike. *User Stories Applied: For Agile Software Development*. Addison-Wesley Professional, 2004.
-
-**Clean Code:**
-- MARTIN, Robert C. *Clean Code: A Handbook of Agile Software Craftsmanship*. Prentice Hall, 2008.
-- MARTIN, Robert C. *Clean Architecture: A Craftsman's Guide to Software Structure and Design*. Prentice Hall, 2017.
-
-### 5.7 Ferramentas e Tecnologias
-
-**Controle de Versão:**
-- CHACON, Scott; STRAUB, Ben. *Pro Git*. 2ª ed. Apress, 2014. Disponível em: https://git-scm.com/book. Acesso em: dezembro 2024.
-
-**Prototipagem e Design:**
-- EBAC - Escola Britânica de Artes Criativas. *Curso de UX/UI Design*. 2024.
-- Draw.io Documentation. *Diagrams and Flowcharts*. Disponível em: https://www.drawio.com/. Acesso em: dezembro 2024.
-
-### 5.8 Gamificação e Engajamento
-
-**Teoria da Gamificação:**
-- KAPP, Karl M. *The Gamification of Learning and Instruction: Game-based Methods and Strategies for Training and Education*. Pfeiffer, 2012.
-- WERBACH, Kevin; HUNTER, Dan. *For the Win: How Game Thinking Can Revolutionize Your Business*. Wharton Digital Press, 2012.
-
-### 5.9 Recursos Online e Comunidades
-
-**Stack Overflow:** Comunidade de desenvolvedores para resolução de problemas técnicos. Disponível em: https://stackoverflow.com/
-
-**GitHub:** Plataforma de hospedagem de código e colaboração. Disponível em: https://github.com/
-
-**MDN Web Docs:** Documentação abrangente sobre tecnologias web. Disponível em: https://developer.mozilla.org/
-
----
+Projeto Autoral por Nicole Zanin Silva.
