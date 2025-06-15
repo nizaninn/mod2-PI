@@ -16,7 +16,7 @@ exports.criarCategoria = async (req, res) => {
   const { nome, descricao } = req.body;
 
   try {
-    console.log('📂 Criando nova categoria:', nome);
+    console.log('Criando nova categoria:', nome);
 
     const novaCategoria = {
       id_unico: proximoIdCategoria++,
@@ -26,10 +26,10 @@ exports.criarCategoria = async (req, res) => {
 
     categoriasCadastradas.push(novaCategoria);
 
-    console.log('✅ Categoria criada:', novaCategoria);
+    console.log('Categoria criada:', novaCategoria);
     res.status(201).json(novaCategoria);
   } catch (err) {
-    console.error('❌ Erro ao criar categoria:', err);
+    console.error('Erro ao criar categoria:', err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -37,12 +37,12 @@ exports.criarCategoria = async (req, res) => {
 // Listar todas as categorias
 exports.listarCategorias = async (req, res) => {
   try {
-    console.log('📂 Listando todas as categorias');
-    console.log('📊 Total de categorias:', categoriasCadastradas.length);
+    console.log('Listando todas as categorias');
+    console.log('Total de categorias:', categoriasCadastradas.length);
 
     res.status(200).json(categoriasCadastradas);
   } catch (err) {
-    console.error('❌ Erro ao listar categorias:', err);
+    console.error('Erro ao listar categorias:', err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -52,19 +52,19 @@ exports.buscarCategoria = async (req, res) => {
   const { id } = req.params;
 
   try {
-    console.log('🔍 Buscando categoria por ID:', id);
+    console.log('Buscando categoria por ID:', id);
 
     const categoria = categoriasCadastradas.find(c => c.id_unico === parseInt(id));
 
     if (!categoria) {
-      console.log('❌ Categoria não encontrada');
+      console.log('Categoria não encontrada');
       return res.status(404).json({ message: 'Categoria não encontrada' });
     }
 
-    console.log('✅ Categoria encontrada:', categoria.nome);
+    console.log('Categoria encontrada:', categoria.nome);
     res.status(200).json(categoria);
   } catch (err) {
-    console.error('❌ Erro ao buscar categoria:', err);
+    console.error('Erro ao buscar categoria:', err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -75,12 +75,12 @@ exports.editarCategoria = async (req, res) => {
   const { nome, descricao } = req.body;
 
   try {
-    console.log('✏️ Editando categoria ID:', id);
+    console.log('Editando categoria ID:', id);
 
     const index = categoriasCadastradas.findIndex(c => c.id_unico === parseInt(id));
 
     if (index === -1) {
-      console.log('❌ Categoria não encontrada para edição');
+      console.log('Categoria não encontrada para edição');
       return res.status(404).json({ message: 'Categoria não encontrada' });
     }
 
@@ -90,10 +90,10 @@ exports.editarCategoria = async (req, res) => {
       descricao
     };
 
-    console.log('✅ Categoria editada:', categoriasCadastradas[index]);
+    console.log('Categoria editada:', categoriasCadastradas[index]);
     res.status(200).json(categoriasCadastradas[index]);
   } catch (err) {
-    console.error('❌ Erro ao editar categoria:', err);
+    console.error('Erro ao editar categoria:', err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -103,21 +103,21 @@ exports.excluirCategoria = async (req, res) => {
   const { id } = req.params;
 
   try {
-    console.log('🗑️ Excluindo categoria ID:', id);
+    console.log('Excluindo categoria ID:', id);
 
     const index = categoriasCadastradas.findIndex(c => c.id_unico === parseInt(id));
 
     if (index === -1) {
-      console.log('❌ Categoria não encontrada para exclusão');
+      console.log('Categoria não encontrada para exclusão');
       return res.status(404).json({ message: 'Categoria não encontrada' });
     }
 
     const categoriaExcluida = categoriasCadastradas.splice(index, 1)[0];
-    console.log('✅ Categoria excluída:', categoriaExcluida.nome);
+    console.log('Categoria excluída:', categoriaExcluida.nome);
 
     res.status(200).json({ message: 'Categoria excluída com sucesso' });
   } catch (err) {
-    console.error('❌ Erro ao excluir categoria:', err);
+    console.error('Erro ao excluir categoria:', err);
     res.status(500).json({ error: err.message });
   }
 };

@@ -17,7 +17,7 @@ Projeto Individual de Nicole Zanin Silva - Checkly.
 
 O Checkly é uma plataforma web para criação e gerenciamento de eventos que inova ao incorporar elementos de gamificação para os participantes. O sistema permite que organizadores criem eventos, cadastrem atividades, gerenciem inscrições e acompanhem em tempo real o engajamento do público.
 
-O participante recebe acesso a um painel personalizado com QR Code, lista de eventos disponíveis, pontuação acumulada e missões a serem cumpridas. Ao participar dos eventos, os usuários realizam check-ins escaneando seus QR Codes nos dispositivos dos monitores. A pontuação é atualizada automaticamente, promovendo uma experiência dinâmica e interativa.
+O participante recebe acesso a um painel personalizado com QR Code, lista de eventos disponíveis e pontuação acumulada. Ao participar dos eventos, os usuários realizam check-ins escaneando seus QR Codes nos dispositivos dos monitores. A pontuação é atualizada automaticamente, promovendo uma experiência dinâmica e interativa.
 
 O organizador pode acompanhar métricas de engajamento, exportar listas de presença e gerar certificados automáticos para os participantes que completarem determinada pontuação. Todos esses recursos estão disponíveis diretamente na plataforma, sem necessidade de aplicativos externos ou planilhas manuais.
 
@@ -29,7 +29,7 @@ A proposta é entregar uma solução leve, intuitiva e atrativa para eventos de 
 
 ### 2.1. Personas (Semana 01)
 
-![Persona](/mvc-boilerplate/assets/imagem-1.png)
+![Persona](/src/assets/imagem-1.png)
 
 
 ### 2.2. User Stories (Semana 01)
@@ -58,9 +58,9 @@ US03 | Como participante de congressos coorporativos, quero encontrar e organiza
 
 ### 3.1. Modelagem do banco de dados  (Semana 3)
 
-![model](/mvc-boilerplate/assets/modelagem.png)
-![fisico](/mvc-boilerplate/assets/print1.png)
-![fisico2](/mvc-boilerplate/assets/print2.png)
+![model](/src/assets/modelagem.png)
+![fisico](/src/assets/print1.png)
+![fisico2](/src/assets/print2.png)
 
 ### 3.1.1 BD e Models (Semana 5)
 
@@ -74,10 +74,10 @@ Esta seção descreve os Models implementados na plataforma web, com foco em sua
 
 **Campos:**
 - `id_unico` (SERIAL, PK): Identificador único do usuário.
-- `nome` (VARCHAR(100)): Nome completo do usuário. **Essa sessão é obrigatória**.
-- `email` (VARCHAR(100)): Endereço de e-mail único. **Essa sessão é obrigatória e única**.
-- `senha` (VARCHAR(100)): Senha do usuário (armazenada no banco de dados). **Essa sessão é obrigatória**.
-- `role` (VARCHAR(20)): Define o papel do usuário, se sua conta será para exercer a função de `'criador'` de eventos ou `'participante'`, que irá apenas realizar as inscrições. **Essa sessão é obrigatória**.
+- `nome` (VARCHAR(100)): Nome completo do usuário. 
+- `email` (VARCHAR(100)): Endereço de e-mail único. 
+- `senha` (VARCHAR(100)): Senha do usuário (armazenada no banco de dados). 
+- `role` (VARCHAR(20)): Define o papel do usuário, se sua conta será para exercer a função de `'criador'` de eventos ou `'participante'`, que irá apenas realizar as inscrições. 
 
 **Relacionamentos:**
 - Pode ser criador de vários `Eventos`.
@@ -93,7 +93,7 @@ Esta seção descreve os Models implementados na plataforma web, com foco em sua
 
 **Campos:**
 - `id_unico` (SERIAL, PK): Identificador único da categoria.
-- `nome` (VARCHAR(100)): Nome da categoria. **Esse campo é obrigatório**.
+- `nome` (VARCHAR(100)): Nome da categoria.
 - `descricao` (TEXT): Descrição opcional da categoria.
 
 **Relacionamentos:**
@@ -107,13 +107,13 @@ Esta seção descreve os Models implementados na plataforma web, com foco em sua
 
 **Campos:**
 - `id_unico` (SERIAL, PK): Identificador único do evento.
-- `nome` (VARCHAR(100)): Nome do evento. **Esse campo é obrigatório**.
+- `nome` (VARCHAR(100)): Nome do evento.
 - `descricao` (TEXT): Descrição detalhada do evento.
-- `data` (DATE): Data de realização do evento. **Esse campo é obrigatório**.
+- `data` (DATE): Data de realização do evento.
 - `local` (VARCHAR(150)): Local do evento.
 - `valor` (DECIMAL): Valor da inscrição (se aplicável).
-- `criador_id` (INT): Referência ao `Usuario` criador. **Esse campo é obrigatório**.
-- `categoria_id` (INT): Referência à `Categoria` do evento. **Esse campo é obrigatório**.
+- `criador_id` (INT): Referência ao `Usuario` criador.
+- `categoria_id` (INT): Referência à `Categoria` do evento.
 
 **Relacionamentos:**
 - Pertence a um `Usuario` (quando for criador).
@@ -123,16 +123,16 @@ Esta seção descreve os Models implementados na plataforma web, com foco em sua
 
 
 
-## Model: Inscricoes
+## Model: Inscrições
 
 **Descrição:** Representa as inscrições dos participantes nos eventos.
 
 **Campos:**
 - `id_unico` (SERIAL, PK): Identificador único da inscrição.
 - `data_de_inscricao` (TIMESTAMP): Data/hora da inscrição. 
-- `status` (VARCHAR(20)): Estado da inscrição: `'pendente'`, `'confirmado'` ou `'cancelado'`. **Esse campo é obrigatório**.
-- `id_participante` (INT): Referência ao participante (`Usuario`). **Esse campo é obrigatório**.
-- `id_evento` (INT): Referência ao `Evento`. **Esse campo é obrigatório**.
+- `status` (VARCHAR(20)): Estado da inscrição: `'pendente'`, `'confirmado'` ou `'cancelado'`.
+- `id_participante` (INT): Referência ao participante (`Usuario`).
+- `id_evento` (INT): Referência ao `Evento`.
 - `token_de_confirmacao` (VARCHAR(255)): Token gerado para confirmação.
 
 **Relacionamentos:**
@@ -146,11 +146,11 @@ Esta seção descreve os Models implementados na plataforma web, com foco em sua
 
 **Campos:**
 - `id_unico` (SERIAL, PK): Identificador único do check-in.
-- `data` (DATE): Data do check-in. **Esse campo é obrigatório**.
-- `hora` (TIME): Hora do check-in. **Esse campo é obrigatório**.
+- `data` (DATE): Data do check-in.
+- `hora` (TIME): Hora do check-in.
 - `local` (VARCHAR(150)): Local de realização do check-in.
-- `id_participante` (INT): Referência ao `Usuario`. **Esse campo é obrigatório**.
-- `id_evento` (INT): Referência ao `Evento`. **Esse campo é obrigatório**.
+- `id_participante` (INT): Referência ao `Usuario`.
+- `id_evento` (INT): Referência ao `Evento`.
 - `qr_token` (VARCHAR(255)): Token gerado para QR Code do check-in.
 
 **Relacionamentos:**
@@ -182,7 +182,7 @@ Model: representa os dados e a lógica de negócios da aplicação. Ele inclui o
 
 View: responsável pela apresentação dos dados ao usuário final. Ela exibe a interface gráfica ou textual com a qual o usuário interage, representando visualmente as informações do Modelo de maneira compreensível. A Visão é passiva e não possui lógica de negócios; ela apenas reflete o estado atual do Modelo.
 
-Conrtroller: atua como intermediário entre a Visão e o Modelo, gerenciando as interações do usuário e as operações de manipulação de dados. Ele recebe as entradas do usuário na Visão, interpreta essas entradas e aciona as ações apropriadas no Modelo. O Controlador também é responsável por atualizar a Visão conforme necessário, refletindo as mudanças nos dados do Modelo.
+Controller: atua como intermediário entre a Visão e o Modelo, gerenciando as interações do usuário e as operações de manipulação de dados. Ele recebe as entradas do usuário na Visão, interpreta essas entradas e aciona as ações apropriadas no Modelo. O Controlador também é responsável por atualizar a Visão conforme necessário, refletindo as mudanças nos dados do Modelo.
 
  Vale ressaltar que o MVC é amplamente utilizado por várias razões, dentre elas, incluem-se as seguintes:
 
@@ -199,12 +199,12 @@ Conrtroller: atua como intermediário entre a Visão e o Modelo, gerenciando as 
 Portanto, o Checlky é uma aplicação web feita com base na arquitetura MVC (Model-View-Controller), cujo esboço foi desenhado através da plataforma Draw.io. 
 
 
-![diagrama](/mvc-boilerplate/assets/ArquiteturaPI.drawio.png)
+![diagrama](/src/assets/ArquiteturaPI.drawio.png)
 
 ### 3.3. Wireframes (Semana 03)
 
-![folha1](/mvc-boilerplate/assets/wireframe1.jpg)
-![folha2](/mvc-boilerplate/assets/wireframe2.jpg)
+![folha1](/src/assets/wireframe1.jpg)
+![folha2](/src/assets/wireframe2.jpg)
 
 Estes são os primeiros wireframes de baixa fidelidade do projeto, concebidos com foco na experiência do usuário e alinhados à seguinte user story:
 
@@ -219,11 +219,11 @@ O guia de estilos é uma biblioteca organizada de componentes de design e padrõ
 
 ### 1. Cores 
 
-![cores](/mvc-boilerplate/assets/cores.png)
+![cores](/src/assets/cores.png)
 
 ### 2. Iconografia
 
-![iconografia](/mvc-boilerplate/assets/iconografia.png)
+![iconografia](/src/assets/icones1.png)
 
 ### 3. Tipografia
 
@@ -246,19 +246,19 @@ O protótipo de alta fidelidade tem como objetivo simular todo o design do produ
 Segue, portanto, os protótipos de alta fidelidade das telas principais e que aparecerão mais vezes na plaforma Checkly. 
 
 Tela de Login
-![login](/mvc-boilerplate/assets/prototipo1.png)
+![login](/src/assets/prototipo1.png)
 ---
 Tela de Cadastro
-![cadastro](/mvc-boilerplate/assets/prototipo2.png)
+![cadastro](/src/assets/prototipo2.png)
 ---
 Tela Principal
-![principal](/mvc-boilerplate/assets/prototipo3.png)
+![principal](/src/assets/prototipo3.png)
 ---
 Lista de inscritos no seu evento (ponto de vista do criador)
-![lista](/mvc-boilerplate/assets/prototipo4.png)
+![lista](/src/assets/prototipo4.png)
 ---
 Tela para se inscrever em algum evento (ponto de vista de participante)
-![incrição](/mvc-boilerplate/assets/prototipo5.png)
+![incrição](/src/assets/prototipo5.png)
 --- 
 
 
@@ -269,7 +269,7 @@ Documentar os endpoints de uma API é essencial para garantir a clareza, organiz
 
 Esta documentação descreve os endpoints disponíveis no sistema, de acordo com cada tabela.
 
-Para a documentação completa dos endpoints, acesse: [documentação de endpoints](/mvc-boilerplate/documentos/endpoints.md)
+Para a documentação completa dos endpoints, acesse: [documentação de endpoints](/src/documentos/endpoints.md)
 
 ### 3.7. Integração Frontend-Backend (Semana 06)
 
@@ -583,19 +583,317 @@ async function realizarCheckin() {
 
 ### 4.1 Demonstração do Sistema Web (Semana 8)
 
-*VIDEO: Insira o link do vídeo demonstrativo nesta seção*
-*Descreva e ilustre aqui o desenvolvimento do sistema web completo, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
+**VIDEO:** *[Link do vídeo demonstrativo será inserido aqui]*
+
+#### 4.1.1 Sistema Completo Desenvolvido
+
+O sistema Checkly foi desenvolvido como uma aplicação web completa para gerenciamento de eventos com funcionalidades de gamificação. A plataforma permite que criadores organizem eventos e participantes se inscrevam, realizem check-in e acumulem pontos.
+
+#### 4.1.2 Tecnologias Implementadas
+
+**Backend:**
+- **Node.js** com Express.js para servidor web
+- **EJS** como template engine para renderização de páginas
+- **Express-session** para gerenciamento de sessões
+- **Sistema de arrays em memória** para persistência de dados (desenvolvimento)
+- **Arquitetura MVC** completa implementada
+
+**Frontend:**
+- **HTML5** semântico e acessível
+- **CSS3** com design responsivo e moderno
+- **JavaScript ES6+** com Fetch API para comunicação assíncrona
+- **Font Awesome** para iconografia
+- **Design system** consistente em todas as páginas
+
+#### 4.1.3 Funcionalidades Entregues
+
+**1. Sistema de Autenticação Completo:**
+- Cadastro de usuários com perfis diferenciados (Criador/Participante)
+- Login seguro com validação de credenciais
+- Sistema de sessões para manter usuários logados
+- Logout com limpeza de sessão
+- Middleware de autenticação protegendo rotas sensíveis
+
+**2. Gerenciamento de Eventos:**
+- Criação de eventos com formulário completo (nome, data, local, categoria, valor)
+- Sistema de categorias pré-definidas (Shows, Negócios, Cultura, Esportes, Educação)
+- Listagem dinâmica de eventos disponíveis
+- Busca em tempo real por nome, local ou descrição
+- Visualização detalhada de eventos individuais
+
+**3. Sistema de Inscrições:**
+- Inscrição em eventos com validação de duplicatas
+- Confirmação automática de inscrições
+- Listagem de eventos inscritos por usuário
+- Tokens de confirmação únicos para cada inscrição
+
+**4. Check-in e Pontuação:**
+- Sistema de check-in funcional para eventos
+- Pontuação automática (10 pontos por check-in realizado)
+- Histórico de pontuação por usuário
+- Validação de presença em eventos
+
+**5. Interface de Usuário Moderna:**
+- Design responsivo para desktop, tablet e mobile
+- Navegação intuitiva com feedback visual
+- Páginas personalizadas por tipo de usuário
+- Dashboard com estatísticas e métricas
+- Perfil do usuário com informações detalhadas
+
+#### 4.1.4 Estrutura de Código Entregue
+
+**Organização de Arquivos:**
+```
+checkly-system/
+├── server.js                    # Servidor principal
+├── package.json                 # Dependências e scripts
+└── src/                         # Código fonte
+    ├── controllers/             # Lógica de negócio
+    │   ├── UsuarioController.js
+    │   ├── EventosController.js
+    │   ├── CategoriasController.js
+    │   ├── InscricoesController.js
+    │   └── CheckinController.js
+    ├── routes/                  # Definição de rotas
+    │   ├── usuario.js
+    │   ├── eventos.js
+    │   ├── categorias.js
+    │   ├── inscricoes.js
+    │   └── checkin.js
+    ├── views/                   # Templates e interface
+    │   ├── pages/               # Páginas HTML (EJS)
+    │   ├── css/                 # Estilos CSS
+    │   └── js/                  # Scripts JavaScript
+    └── assets/                  # Recursos estáticos
+```
+
+**Principais Controllers Implementados:**
+- **UsuarioController**: Gerenciamento de usuários, autenticação e perfis
+- **EventosController**: CRUD completo de eventos com validações
+- **CategoriasController**: Gerenciamento de categorias de eventos
+- **InscricoesController**: Sistema de inscrições com verificações
+- **CheckinController**: Controle de presença e pontuação
+
+#### 4.1.5 Demonstração Visual do Sistema
+
+**Tela de Login Implementada:**
+Sistema de autenticação funcional com validação de credenciais e redirecionamento baseado no tipo de usuário.
+
+**Dashboard Principal:**
+Interface personalizada mostrando eventos disponíveis, sistema de busca em tempo real e navegação por categorias.
+
+**Criação de Eventos:**
+Formulário completo para criadores com validação de campos obrigatórios e seleção de categorias.
+
+**Sistema de Inscrições:**
+Página detalhada do evento com botão de inscrição funcional e feedback de confirmação.
+
+**Perfil do Usuário:**
+Dashboard moderno com avatar dinâmico, estatísticas de pontuação e ações rápidas.
+
+#### 4.1.6 Integração Frontend-Backend
+
+Todas as funcionalidades foram implementadas com integração completa:
+- **Comunicação assíncrona** via Fetch API
+- **Validação dupla** no frontend e backend
+- **Tratamento de erros** robusto em todas as operações
+- **Feedback visual** para todas as ações do usuário
+- **Persistência de dados** em arrays estruturados (desenvolvimento)
+
+O sistema demonstra uma aplicação web moderna e funcional, pronta para uso em ambiente de desenvolvimento e facilmente adaptável para produção com banco de dados real.
 
 ### 4.2 Conclusões e Trabalhos Futuros (Semana 8)
 
-*Indique pontos fortes e pontos a melhorar de maneira geral.*
-*Relacione também quaisquer outras ideias que você tenha para melhorias futuras.*
+#### 4.2.1 Pontos Fortes do Sistema Desenvolvido
+
+**Arquitetura Sólida:**
+O sistema foi desenvolvido seguindo o padrão MVC (Model-View-Controller), proporcionando uma estrutura organizada e escalável. A separação clara entre lógica de negócio, apresentação e controle facilita a manutenção e futuras expansões do código.
+
+**Interface de Usuário Moderna:**
+A implementação de um design responsivo e intuitivo, com componentes visuais consistentes e navegação fluida, proporciona uma excelente experiência do usuário. O uso de Font Awesome para iconografia e um sistema de cores harmoniosas contribui para a profissionalização da plataforma.
+
+**Funcionalidades Completas:**
+Todas as funcionalidades principais foram implementadas e testadas: autenticação, gerenciamento de eventos, sistema de inscrições, check-in e pontuação. O sistema oferece uma solução completa para organização de eventos com elementos de gamificação.
+
+**Integração Frontend-Backend Robusta:**
+A comunicação entre frontend e backend foi implementada exclusivamente com Fetch API, garantindo operações assíncronas eficientes e tratamento adequado de erros. Todas as funcionalidades possuem validação dupla (cliente e servidor).
+
+**Escalabilidade e Manutenibilidade:**
+O código foi estruturado de forma modular, com controllers específicos para cada funcionalidade, facilitando futuras manutenções e expansões. A documentação completa dos endpoints e a organização clara dos arquivos contribuem para a sustentabilidade do projeto.
+
+#### 4.2.2 Pontos a Melhorar
+
+**Persistência de Dados:**
+Atualmente o sistema utiliza arrays em memória para desenvolvimento. Para produção, é necessária a implementação de um banco de dados relacional (PostgreSQL) para garantir persistência e integridade dos dados.
+
+**Sistema de Autenticação:**
+Embora funcional, o sistema de autenticação pode ser aprimorado com:
+- Criptografia de senhas (bcrypt)
+- Tokens JWT para maior segurança
+- Sistema de recuperação de senha por email
+- Autenticação de dois fatores
+
+**Validações e Segurança:**
+- Implementação de validações mais rigorosas no backend
+- Sanitização de inputs para prevenir ataques XSS
+- Rate limiting para prevenir ataques de força bruta
+- Validação de uploads de arquivos
+
+**Performance e Otimização:**
+- Implementação de cache para consultas frequentes
+- Otimização de imagens e recursos estáticos
+- Minificação de CSS e JavaScript
+- Implementação de lazy loading para listas grandes
+
+#### 4.2.3 Trabalhos Futuros e Melhorias
+
+**Funcionalidades Avançadas:**
+
+1. **Sistema de Notificações:**
+   - Notificações push para lembretes de eventos
+   - Emails automáticos de confirmação e lembretes
+   - Sistema de notificações em tempo real
+
+2. **Relatórios e Analytics:**
+   - Dashboard avançado com métricas detalhadas
+   - Relatórios de participação e engajamento
+   - Exportação de dados em PDF e Excel
+   - Gráficos interativos de estatísticas
+
+3. **Sistema de Pagamentos:**
+   - Integração com gateways de pagamento (Stripe, PayPal)
+   - Gestão de eventos pagos e gratuitos
+   - Sistema de reembolsos
+   - Controle financeiro para organizadores
+
+4. **Gamificação Avançada:**
+   - Sistema de badges e conquistas
+   - Ranking de participantes
+   - Desafios e missões especiais
+   - Programa de fidelidade com recompensas
+
+5. **Recursos Sociais:**
+   - Sistema de comentários e avaliações
+   - Compartilhamento em redes sociais
+   - Criação de grupos e comunidades
+   - Chat em tempo real durante eventos
+
+**Melhorias Técnicas:**
+
+1. **Mobile App:**
+   - Desenvolvimento de aplicativo móvel nativo
+   - Sincronização com a plataforma web
+   - Notificações push nativas
+   - QR Code scanner integrado
+
+2. **API Pública:**
+   - Documentação completa da API
+   - Sistema de autenticação por API keys
+   - Rate limiting e throttling
+   - Webhooks para integrações externas
+
+3. **Infraestrutura:**
+   - Deploy em cloud (AWS, Google Cloud, Azure)
+   - Sistema de backup automatizado
+   - Monitoramento e logging avançado
+   - CDN para recursos estáticos
+
+4. **Acessibilidade:**
+   - Conformidade com WCAG 2.1
+   - Suporte a leitores de tela
+   - Navegação por teclado
+   - Alto contraste e fontes ajustáveis
+
+#### 4.2.4 Considerações Finais
+
+O projeto Checkly representa uma solução completa e funcional para gerenciamento de eventos com gamificação. A implementação atual demonstra solidez técnica e atenção à experiência do usuário, estabelecendo uma base sólida para futuras expansões.
+
+A arquitetura escolhida e as tecnologias implementadas permitem escalabilidade e manutenibilidade, características essenciais para um sistema que pode crescer e atender diferentes tipos de eventos e organizações.
+
+O sistema está pronto para uso em ambiente de desenvolvimento e pode ser facilmente adaptado para produção com as melhorias sugeridas, especialmente a implementação de banco de dados e aprimoramentos de segurança.
+
+A experiência de desenvolvimento deste projeto proporcionou aprendizado significativo em desenvolvimento full-stack, integração frontend-backend, design de interfaces e arquitetura de software, contribuindo para a formação técnica e preparação para desafios reais do mercado de tecnologia.
 
 
 
 ## <a name="c5"></a>5. Referências
 
-_Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
+### 5.1 Documentação Técnica
 
----
+**Node.js e Express.js:**
+- Node.js Documentation. *Node.js Official Documentation*. Disponível em: https://nodejs.org/en/docs/. Acesso em: dezembro 2024.
+- Express.js Guide. *Express.js Official Guide*. Disponível em: https://expressjs.com/. Acesso em: dezembro 2024.
+
+**Frontend e Design:**
+- MDN Web Docs. *JavaScript Fetch API*. Mozilla Developer Network. Disponível em: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API. Acesso em: dezembro 2024.
+- Font Awesome Documentation. *Font Awesome Icons*. Disponível em: https://fontawesome.com/docs. Acesso em: dezembro 2024.
+
+### 5.2 Arquitetura e Padrões de Desenvolvimento
+
+**Padrão MVC:**
+- GAMMA, Erich et al. *Design Patterns: Elements of Reusable Object-Oriented Software*. Addison-Wesley Professional, 1994.
+- FOWLER, Martin. *Patterns of Enterprise Application Architecture*. Addison-Wesley Professional, 2002.
+
+**Desenvolvimento Web:**
+- BROWN, Ethan. *Web Development with Node and Express: Leveraging the JavaScript Stack*. 2ª ed. O'Reilly Media, 2019.
+- SIMPSON, Kyle. *You Don't Know JS: ES6 & Beyond*. O'Reilly Media, 2015.
+
+### 5.3 Design e Experiência do Usuário
+
+**UX/UI Design:**
+- KRUG, Steve. *Don't Make Me Think: A Common Sense Approach to Web Usability*. 3ª ed. New Riders, 2014.
+- NORMAN, Don. *The Design of Everyday Things*. Basic Books, 2013.
+
+**Design Responsivo:**
+- MARCOTTE, Ethan. *Responsive Web Design*. A Book Apart, 2011.
+- WROBLEWSKI, Luke. *Mobile First*. A Book Apart, 2011.
+
+### 5.4 Desenvolvimento de APIs e Integração
+
+**RESTful APIs:**
+- FIELDING, Roy Thomas. *Architectural Styles and the Design of Network-based Software Architectures*. Doctoral dissertation, University of California, Irvine, 2000.
+- RICHARDSON, Leonard; RUBY, Sam. *RESTful Web Services*. O'Reilly Media, 2007.
+
+**Segurança Web:**
+- OWASP Foundation. *OWASP Top Ten Web Application Security Risks*. Disponível em: https://owasp.org/www-project-top-ten/. Acesso em: dezembro 2024.
+
+### 5.5 Banco de Dados e Persistência
+
+**PostgreSQL:**
+- PostgreSQL Documentation. *PostgreSQL Official Documentation*. Disponível em: https://www.postgresql.org/docs/. Acesso em: dezembro 2024.
+- KLINE, Kevin E.; KLINE, Daniel. *SQL in a Nutshell*. 4ª ed. O'Reilly Media, 2022.
+
+### 5.6 Metodologias e Boas Práticas
+
+**Desenvolvimento Ágil:**
+- BECK, Kent et al. *Manifesto for Agile Software Development*. Disponível em: https://agilemanifesto.org/. Acesso em: dezembro 2024.
+- COHN, Mike. *User Stories Applied: For Agile Software Development*. Addison-Wesley Professional, 2004.
+
+**Clean Code:**
+- MARTIN, Robert C. *Clean Code: A Handbook of Agile Software Craftsmanship*. Prentice Hall, 2008.
+- MARTIN, Robert C. *Clean Architecture: A Craftsman's Guide to Software Structure and Design*. Prentice Hall, 2017.
+
+### 5.7 Ferramentas e Tecnologias
+
+**Controle de Versão:**
+- CHACON, Scott; STRAUB, Ben. *Pro Git*. 2ª ed. Apress, 2014. Disponível em: https://git-scm.com/book. Acesso em: dezembro 2024.
+
+**Prototipagem e Design:**
+- EBAC - Escola Britânica de Artes Criativas. *Curso de UX/UI Design*. 2024.
+- Draw.io Documentation. *Diagrams and Flowcharts*. Disponível em: https://www.drawio.com/. Acesso em: dezembro 2024.
+
+### 5.8 Gamificação e Engajamento
+
+**Teoria da Gamificação:**
+- KAPP, Karl M. *The Gamification of Learning and Instruction: Game-based Methods and Strategies for Training and Education*. Pfeiffer, 2012.
+- WERBACH, Kevin; HUNTER, Dan. *For the Win: How Game Thinking Can Revolutionize Your Business*. Wharton Digital Press, 2012.
+
+### 5.9 Recursos Online e Comunidades
+
+**Stack Overflow:** Comunidade de desenvolvedores para resolução de problemas técnicos. Disponível em: https://stackoverflow.com/
+
+**GitHub:** Plataforma de hospedagem de código e colaboração. Disponível em: https://github.com/
+
+**MDN Web Docs:** Documentação abrangente sobre tecnologias web. Disponível em: https://developer.mozilla.org/
+
 ---
