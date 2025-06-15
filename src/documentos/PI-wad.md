@@ -583,7 +583,7 @@ async function realizarCheckin() {
 
 ### 4.1 Demonstração do Sistema Web (Semana 8)
 
-**VIDEO:** 
+**VIDEO:** https://drive.google.com/file/d/1P80bKsjZKRvvSViL1ldTXt5vmI_gtCOq/view?usp=sharing 
 
 #### 4.1.1 Sistema Completo Desenvolvido
 
